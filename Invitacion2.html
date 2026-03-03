@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apertura de sobre de carta</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Pinyon+Script&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="Css\Css.css">
+
+</head>
+<body class="h-full w-full relative antialiased selection:bg-[#eab6c4] selection:text-white flex items-center justify-center overflow-hidden">
+
+    <div id="page-wrapper" class="w-full absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-1000">
+        
+        
+        <div id="intro-presentation" class="intro-anim-container flex flex-col items-center w-full px-4 pb-32 sm:pb-15">
+            
+            <!-- Anuncio de Boda Superior -->
+            <div id="wedding-announcement" class="title-fade-anim text-center mb-8 sm:mb-12 transition-opacity duration-700">
+                <p class="font-sans text-[10px] sm:text-[12px] text-[#7c9787] font-bold tracking-[0.3em] uppercase mb-2 drop-shadow-sm">Con gran alegría anunciamos que</p>
+                <h1 class="font-serif-elegant text-5xl sm:text-6xl text-[#5a7d6a] italic font-semibold drop-shadow-sm mt-2">¡Nos casamos!</h1>
+            </div>
+
+            <div id="envelope-floater" class="floating">
+                <!-- Contenedor del sobre responsivo -->
+                <div class="envelope-wrapper">
+                    
+                    <!-- Fondo interior del sobre -->
+                    <div class="absolute inset-0 bg-[#7c9787] rounded-md shadow-[0_20px_40px_rgba(0,0,0,0.12)] overflow-hidden">
+                        <div class="paper-texture"></div>
+                        <div class="absolute inset-0 shadow-[inset_0_30px_50px_rgba(0,0,0,0.3)]"></div>
+                    </div>
+                    
+                    <!-- La Carta asomándose -->
+                    <div id="envelope-letter" class="letter-pull absolute top-2 left-3 right-3 bottom-2 bg-white rounded flex flex-col items-center pt-8 shadow-inner overflow-hidden border border-gray-100">
+                        <div class="absolute inset-2 border border-[#d4af37]/40 rounded-t-[40px] pointer-events-none"></div>
+                        <div class="absolute inset-3 border-[0.5px] border-[#d4af37]/20 rounded-t-[36px] pointer-events-none"></div>
+                        <div class="w-[60%] h-[1px] bg-gradient-to-r from-transparent via-[#d4af37]/60 to-transparent absolute top-6"></div>
+                        
+                        <h2 class="font-serif-elegant italic font-bold text-5xl sm:text-6xl text-[#5a7d6a] mt-4 relative z-10 drop-shadow-sm">A <span class="text-[#eab6c4] mx-1">&</span> P</h2>
+                        <p class="font-sans font-bold mt-2 text-[10px] sm:text-[11px] text-[#dca0b1] tracking-[0.4em] uppercase relative z-10">Estás invitado</p>
+                    </div>
+
+                    <!-- Solapas frontales estáticas -->
+                    <div class="absolute inset-0 pointer-events-none rounded-md overflow-hidden">
+                        
+                        <!-- Solapa Izquierda -->
+                        <div class="absolute inset-0 z-[31]" style="filter: drop-shadow(4px 0 10px rgba(0,0,0,0.15));">
+                            <div class="absolute top-0 bottom-0 left-0 w-[52%] bg-[#81a391]" style="clip-path: polygon(0 0, 100% 50%, 0 100%);">
+                                <div class="paper-texture"></div>
+                            </div>
+                        </div>
+
+                        <!-- Solapa Derecha -->
+                        <div class="absolute inset-0 z-[31]" style="filter: drop-shadow(-4px 0 10px rgba(0,0,0,0.15));">
+                            <div class="absolute top-0 bottom-0 right-0 w-[52%] bg-[#769784]" style="clip-path: polygon(100% 0, 0 50%, 100% 100%);">
+                                <div class="paper-texture"></div>
+                            </div>
+                        </div>
+
+                        <!-- Solapa Inferior -->
+                        <div class="absolute inset-0 z-[32]" style="filter: drop-shadow(0 -5px 12px rgba(0,0,0,0.2));">
+                            <div class="absolute bottom-0 left-0 right-0 h-[58%] bg-[#8ba696]" style="clip-path: polygon(0 100%, 50% 0, 100% 100%);">
+                                <div class="paper-texture"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FIX iOS: Elemento falso para proyectar sombra de la solapa SIN afectar la animación 3D -->
+                    <div id="flap-fake-shadow" class="absolute inset-0 pointer-events-none z-[39] transition-opacity duration-300" style="filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));">
+                        <div class="absolute top-0 left-0 right-0 h-[62%]" style="clip-path: polygon(0 0, 100% 0, 50% 100%);">
+                            <div class="w-full h-full bg-black/5"></div>
+                        </div>
+                    </div>
+
+                    <!-- Solapa superior animada (Libre de filter drop-shadow para evitar bugs en Safari) -->
+                    <div id="envelope-flap" class="flap-top absolute inset-0 pointer-events-none">
+                        
+                        <!-- Exterior de la solapa -->
+                        <div class="absolute top-0 left-0 right-0 h-[62%] bg-[#9bc1ad]" style="clip-path: polygon(0 0, 100% 0, 50% 100%); backface-visibility: hidden; -webkit-backface-visibility: hidden;">
+                            <div class="paper-texture"></div>
+                        </div>
+
+                        <!-- Interior de la solapa (CORREGIDO: rotateY en lugar de rotateX para no deformar el triángulo al abrir) -->
+                        <div class="absolute top-0 left-0 right-0 h-[62%] polka-dots" style="clip-path: polygon(0 0, 100% 0, 50% 100%); transform: rotateY(180deg); backface-visibility: hidden; -webkit-backface-visibility: hidden;">
+                            <div class="absolute inset-0 shadow-[inset_0_10px_20px_rgba(0,0,0,0.06)]"></div>
+                        </div>
+                    </div>
+
+                    <!-- Sello de Lacre -->
+                    <div id="wax-seal" onclick="openEnvelope()" class="wax-seal absolute top-[52%] sm:top-[56%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 cursor-pointer w-[68px] h-[68px] sm:w-[76px] sm:h-[76px] bg-[#eab6c4] rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.15),inset_2px_2px_5px_rgba(255,255,255,0.7),inset_-3px_-3px_6px_rgba(0,0,0,0.15)] flex items-center justify-center border border-[#dca0b1] hover:scale-105 active:scale-95 transition-all">
+                        <span class="font-seal font-bold text-white text-[20px] sm:text-[22px] tracking-wider whitespace-nowrap drop-shadow-sm relative top-[1px]">
+                            A & P
+                        </span>
+                    </div>
+                    
+                    <!-- Cuadro de Invitaciones -->
+                    <div id="guest-label" class="guest-label-anim absolute -bottom-14 sm:-bottom-16 left-1/2 -translate-x-1/2 z-[45] bg-white px-8 py-4 sm:py-5 rounded-[14px] shadow-[0_15px_30px_rgba(0,0,0,0.1)] text-center w-[90%] max-w-[280px]">
+                        <h3 class="font-serif-elegant text-[#5a7d6a] font-black text-[16px] sm:text-[18px] tracking-[0.15em] uppercase mb-[6px] drop-shadow-sm">Invitación</h3>
+                        <p class="font-sans font-bold text-[11px] sm:text-[12px] text-[#dca0b1] tracking-[0.2em] uppercase mb-4">Válida para</p>
+                        
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="flex-1 h-[1px] bg-[#f4c2d0] opacity-80"></div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="font-serif-elegant font-bold text-[#eab6c4] text-[50px] sm:text-[60px] leading-none drop-shadow-sm">2</span>
+                                <span class="font-sans text-[10px] sm:text-[11px] font-bold tracking-[0.3em] uppercase text-[#7c9787] mb-1">Personas</span>
+                            </div>
+                            <div class="flex-1 h-[1px] bg-[#f4c2d0] opacity-80"></div>
+                        </div>
+                    </div>
+
+                    <!-- Texto de Instrucción -->
+                    <div id="instruction-wrapper" class="absolute -bottom-32 sm:-bottom-40 left-1/2 -translate-x-1/2 w-full text-fade-anim">
+                        <p id="instruction-text" class="text-[14px] sm:text-[16px] text-[#5a7d6a] font-black font-sans tracking-[0.2em] text-center animate-bounce drop-shadow-md uppercase">
+                            Toca el sello para abrir
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="Js\js.js"> </script>
+</body>
+</html>

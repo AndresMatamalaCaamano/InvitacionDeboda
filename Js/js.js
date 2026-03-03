@@ -53,7 +53,7 @@
             // 5. Redireccionar a la siguiente página HTML
             setTimeout(() => {
                 // Reemplaza 'invitacion_principal.html' con el nombre real de tu archivo destino
-                window.location.href = 'invitacion_principal.html';
+                window.location.href = 'informacion.html';
             }, 3500); // Espera 3.5 segundos en total antes de redirigir
         }
 
