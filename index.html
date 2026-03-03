@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Apertura de Invitación Premium</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Pinyon+Script&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Configuraciones generales */
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f2efeb;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .font-serif-elegant { font-family: 'Playfair Display', serif; }
+        .font-cursive { font-family: 'Pinyon Script', cursive; }
+        .font-seal { font-family: 'Cinzel', serif; }
+
+        /* Textura de papel realista */
+        .paper-texture {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            mix-blend-mode: multiply;
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            z-index: 50;
+        }
+
+        .polka-dots {
+            background-color: #fdfbfb;
+            background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='4' fill='none' stroke='%23f4c2d0' stroke-width='1.5' opacity='0.7'/%3E%3C/svg%3E");
+            background-size: 30px 30px;
+        }
+
+        /* Contenedor principal con perspectiva */
+        .envelope-wrapper { 
+            perspective: 2000px; /* Mayor perspectiva para suavizar 3D en móviles */
+            width: 85vw;
+            max-width: 400px;
+            position: relative;
+        }
+        
+        .envelope-wrapper::before {
+            content: "";
+            display: block;
+            padding-bottom: 70%; 
+        }
+        
+        /* FIX iOS: Animación de la solapa SIN filter drop-shadow */
+        .flap-top {
+            transform-origin: top;
+            transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 40;
+            transform-style: preserve-3d;
+            will-change: transform;
+            /* translateZ(0) previene parpadeos en WebKit */
+            transform: translateZ(0);
+        }
+        
+        .flap-top.open {
+            transform: rotateX(180deg) translateZ(0);
+        }
+        
+        .letter-pull {
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 20;
+            will-change: transform;
+        }
+        .letter-pull.open {
+            transform: translateY(-65%) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .wax-seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .wax-seal.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .wax-seal.open {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+            pointer-events: none;
+        }
+
+        .guest-label-anim {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-10px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+        .guest-label-anim.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .guest-label-anim.open {
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px);
+            pointer-events: none;
+        }
+
+        .intro-anim-container {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.5s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+        .intro-anim-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+        }
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .text-fade-anim { opacity: 0; transition: opacity 1s ease; }
+        .text-fade-anim.show { opacity: 1; }
+
+        .title-fade-anim {
+            opacity: 0;
+            transform: translateY(-15px);
+            transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+        .title-fade-anim.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FIX DE RENDIMIENTO: translate3d para uso de GPU en móviles */
+        .effect-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 9999;
+            will-change: transform, opacity;
+        }
+        @keyframes particle-explode {
+            0% { transform: translate3d(0, 0, 0) scale(0) rotate(0deg); opacity: 1; }
+            20% { opacity: 1; }
+            80% { opacity: 0.8; }
+            100% { transform: translate3d(var(--tx), calc(var(--ty) + 100px), 0) scale(var(--scale)) rotate(var(--rot)); opacity: 0; }
+        }
+        .anim-particle {
+            animation: particle-explode var(--duration) cubic-bezier(0.25, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInScreen {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="h-full w-full relative antialiased selection:bg-[#eab6c4] selection:text-white flex items-center justify-center overflow-hidden">
+
+    <div id="page-wrapper" class="w-full absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-1000">
+        
+        <!-- El pb-12 de aquí ahora funciona perfectamente para dar un margen sutil hacia abajo porque el body ya es h-full -->
+        <div id="intro-presentation" class="intro-anim-container flex flex-col items-center w-full px-4 pb-32 sm:pb-15">
+            
+            <!-- Anuncio de Boda Superior -->
+            <div id="wedding-announcement" class="title-fade-anim text-center mb-8 sm:mb-12 transition-opacity duration-700">
+                <p class="font-sans text-[10px] sm:text-[12px] text-[#7c9787] font-bold tracking-[0.3em] uppercase mb-2 drop-shadow-sm">Con gran alegría anunciamos que</p>
+                <h1 class="font-serif-elegant text-5xl sm:text-6xl text-[#5a7d6a] italic font-semibold drop-shadow-sm mt-2">¡Nos casamos!</h1>
+            </div>
+
+            <div id="envelope-floater" class="floating">
+                <!-- Contenedor del sobre responsivo -->
+                <div class="envelope-wrapper">
+                    
+                    <!-- Fondo interior del sobre -->
+                    <div class="absolute inset-0 bg-[#7c9787] rounded-md shadow-[0_20px_40px_rgba(0,0,0,0.12)] overflow-hidden">
+                        <div class="paper-texture"></div>
+                        <div class="absolute inset-0 shadow-[inset_0_30px_50px_rgba(0,0,0,0.3)]"></div>
+                    </div>
+                    
+                    <!-- La Carta asomándose -->
+                    <div id="envelope-letter" class="letter-pull absolute top-2 left-3 right-3 bottom-2 bg-white rounded flex flex-col items-center pt-8 shadow-inner overflow-hidden border border-gray-100">
+                        <div class="absolute inset-2 border border-[#d4af37]/40 rounded-t-[40px] pointer-events-none"></div>
+                        <div class="absolute inset-3 border-[0.5px] border-[#d4af37]/20 rounded-t-[36px] pointer-events-none"></div>
+                        <div class="w-[60%] h-[1px] bg-gradient-to-r from-transparent via-[#d4af37]/60 to-transparent absolute top-6"></div>
+                        
+                        <h2 class="font-serif-elegant italic font-bold text-5xl sm:text-6xl text-[#5a7d6a] mt-4 relative z-10 drop-shadow-sm">A <span class="text-[#eab6c4] mx-1">&</span> P</h2>
+                        <p class="font-sans font-bold mt-2 text-[10px] sm:text-[11px] text-[#dca0b1] tracking-[0.4em] uppercase relative z-10">Estás invitado</p>
+                    </div>
+
+                    <!-- Solapas frontales estáticas -->
+                    <div class="absolute inset-0 pointer-events-none rounded-md overflow-hidden">
+                        
+                        <!-- Solapa Izquierda -->
+                        <div class="absolute inset-0 z-[31]" style="filter: drop-shadow(4px 0 10px rgba(0,0,0,0.15));">
+                            <div class="absolute top-0 bottom-0 left-0 w-[52%] bg-[#81a391]" style="clip-path: polygon(0 0, 100% 50%, 0 100%);">
+                                <div class="paper-texture"></div>
+                            </div>
+                        </div>
+
+                        <!-- Solapa Derecha -->
+                        <div class="absolute inset-0 z-[31]" style="filter: drop-shadow(-4px 0 10px rgba(0,0,0,0.15));">
+                            <div class="absolute top-0 bottom-0 right-0 w-[52%] bg-[#769784]" style="clip-path: polygon(100% 0, 0 50%, 100% 100%);">
+                                <div class="paper-texture"></div>
+                            </div>
+                        </div>
+
+                        <!-- Solapa Inferior -->
+                        <div class="absolute inset-0 z-[32]" style="filter: drop-shadow(0 -5px 12px rgba(0,0,0,0.2));">
+                            <div class="absolute bottom-0 left-0 right-0 h-[58%] bg-[#8ba696]" style="clip-path: polygon(0 100%, 50% 0, 100% 100%);">
+                                <div class="paper-texture"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FIX iOS: Elemento falso para proyectar sombra de la solapa SIN afectar la animación 3D -->
+                    <div id="flap-fake-shadow" class="absolute inset-0 pointer-events-none z-[39] transition-opacity duration-300" style="filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));">
+                        <div class="absolute top-0 left-0 right-0 h-[62%]" style="clip-path: polygon(0 0, 100% 0, 50% 100%);">
+                            <div class="w-full h-full bg-black/5"></div>
+                        </div>
+                    </div>
+
+                    <!-- Solapa superior animada (Libre de filter drop-shadow para evitar bugs en Safari) -->
+                    <div id="envelope-flap" class="flap-top absolute inset-0 pointer-events-none">
+                        
+                        <!-- Exterior de la solapa -->
+                        <div class="absolute top-0 left-0 right-0 h-[62%] bg-[#9bc1ad]" style="clip-path: polygon(0 0, 100% 0, 50% 100%); backface-visibility: hidden; -webkit-backface-visibility: hidden;">
+                            <div class="paper-texture"></div>
+                        </div>
+
+                        <!-- Interior de la solapa (CORREGIDO: rotateY en lugar de rotateX para no deformar el triángulo al abrir) -->
+                        <div class="absolute top-0 left-0 right-0 h-[62%] polka-dots" style="clip-path: polygon(0 0, 100% 0, 50% 100%); transform: rotateY(180deg); backface-visibility: hidden; -webkit-backface-visibility: hidden;">
+                            <div class="absolute inset-0 shadow-[inset_0_10px_20px_rgba(0,0,0,0.06)]"></div>
+                        </div>
+                    </div>
+
+                    <!-- Sello de Lacre -->
+                    <div id="wax-seal" onclick="openEnvelope()" class="wax-seal absolute top-[52%] sm:top-[56%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 cursor-pointer w-[68px] h-[68px] sm:w-[76px] sm:h-[76px] bg-[#eab6c4] rounded-full shadow-[0_4px_10px_rgba(0,0,0,0.15),inset_2px_2px_5px_rgba(255,255,255,0.7),inset_-3px_-3px_6px_rgba(0,0,0,0.15)] flex items-center justify-center border border-[#dca0b1] hover:scale-105 active:scale-95 transition-all">
+                        <span class="font-seal font-bold text-white text-[20px] sm:text-[22px] tracking-wider whitespace-nowrap drop-shadow-sm relative top-[1px]">
+                            A & P
+                        </span>
+                    </div>
+                    
+                    <!-- Cuadro de Invitaciones -->
+                    <div id="guest-label" class="guest-label-anim absolute -bottom-14 sm:-bottom-16 left-1/2 -translate-x-1/2 z-[45] bg-white px-8 py-4 sm:py-5 rounded-[14px] shadow-[0_15px_30px_rgba(0,0,0,0.1)] text-center w-[90%] max-w-[280px]">
+                        <h3 class="font-serif-elegant text-[#5a7d6a] font-black text-[16px] sm:text-[18px] tracking-[0.15em] uppercase mb-[6px] drop-shadow-sm">Invitación</h3>
+                        <p class="font-sans font-bold text-[11px] sm:text-[12px] text-[#dca0b1] tracking-[0.2em] uppercase mb-4">Válida para</p>
+                        
+                        <div class="flex items-center justify-center gap-3">
+                            <div class="flex-1 h-[1px] bg-[#f4c2d0] opacity-80"></div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="font-serif-elegant font-bold text-[#eab6c4] text-[50px] sm:text-[60px] leading-none drop-shadow-sm">2</span>
+                                <span class="font-sans text-[10px] sm:text-[11px] font-bold tracking-[0.3em] uppercase text-[#7c9787] mb-1">Pases</span>
+                            </div>
+                            <div class="flex-1 h-[1px] bg-[#f4c2d0] opacity-80"></div>
+                        </div>
+                    </div>
+
+                    <!-- Texto de Instrucción -->
+                    <div id="instruction-wrapper" class="absolute -bottom-32 sm:-bottom-40 left-1/2 -translate-x-1/2 w-full text-fade-anim">
+                        <p id="instruction-text" class="text-[14px] sm:text-[16px] text-[#5a7d6a] font-black font-sans tracking-[0.2em] text-center animate-bounce drop-shadow-md uppercase">
+                            Toca el sello para abrir
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animaciones de Entrada Inicial
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('intro-presentation').classList.add('show'), 100);
+            setTimeout(() => document.getElementById('wedding-announcement').classList.add('show'), 600);
+            setTimeout(() => document.getElementById('wax-seal').classList.add('show'), 1000);
+            setTimeout(() => document.getElementById('guest-label').classList.add('show'), 1400);
+            setTimeout(() => document.getElementById('instruction-wrapper').classList.add('show'), 2000);
+        });
+
+        let isOpened = false;
+
+        function openEnvelope() {
+            if (isOpened) return;
+            isOpened = true;
+
+            const seal = document.getElementById('wax-seal');
+            const guestLabel = document.getElementById('guest-label');
+            const flap = document.getElementById('envelope-flap');
+            const fakeShadow = document.getElementById('flap-fake-shadow');
+            const letter = document.getElementById('envelope-letter');
+            const textInstr = document.getElementById('instruction-wrapper');
+            const announcement = document.getElementById('wedding-announcement');
+            const pageWrapper = document.getElementById('page-wrapper');
+
+            // 1. Ocultar UI exterior
+            seal.classList.add('open');
+            guestLabel.classList.add('open');
+            textInstr.classList.remove('show');
+            announcement.style.opacity = '0';
+            
+            // Ocultar sombra falsa antes de rotar para evitar bugs en iOS
+            fakeShadow.style.opacity = '0';
+
+            // 2. Disparar los brillos
+            spawnEffects();
+
+            // 3. Abrir solapa
+            setTimeout(() => {
+                flap.classList.add('open');
+                
+                // FIX iOS: Cambiar Z-Index por JS a la mitad del giro en lugar de CSS
+                setTimeout(() => {
+                    flap.style.zIndex = '15';
+                }, 400); // Casi a la mitad de los 0.9s de la transición
+
+            }, 250);
+
+            // 4. Sacar carta
+            setTimeout(() => {
+                letter.classList.add('open');
+            }, 1000);
+
+            // 5. Redireccionar a la siguiente página HTML
+            setTimeout(() => {
+                // Reemplaza 'invitacion_principal.html' con el nombre real de tu archivo destino
+                window.location.href = 'invitacion_principal.html';
+            }, 3500); // Espera 3.5 segundos en total antes de redirigir
+        }
+
+        // Función generadora de Brillos (Optimizada para Móviles)
+        function spawnEffects() {
+            const seal = document.getElementById('wax-seal');
+            const rect = seal.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            // FIX DE RENDIMIENTO: Detección de celular para reducir la carga de memoria
+            const isMobile = window.innerWidth < 640;
+            const distanceMultiplier = isMobile ? 0.6 : 1;
+            const sizeMultiplier = isMobile ? 0.8 : 1;
+            
+            // Reducimos las partículas un 60% en móviles para mantener los 60fps intactos
+            const countMultiplier = isMobile ? 0.4 : 1; 
+
+            const fragment = document.createDocumentFragment();
+
+            const svgs = {
+                sparkle: `<svg viewBox="0 0 24 24" fill="#d4af37"><path d="M12 0l2.5 8.5L23 11l-8.5 2.5L12 22l-2.5-8.5L1 11l8.5-2.5z"/></svg>`,
+                flower1: `<svg viewBox="0 0 24 24" fill="#f4c2d0"><path d="M12 2c0 0-3 4-3 8s3 6 3 6 3-2 3-6-3-8-3-8z"/><path d="M12 22c0 0 3-4 3-8s-3-6-3-6-3 2-3 6 3 8 3 8z"/><path d="M2 12c0 0 4-3 8-3s6 3 6 3-2 3-6 3-8-3-8-3z"/><path d="M22 12c0 0-4 3-8 3s-6-3-6-3 2-3 6-3 8 3 8 3z"/></svg>`,
+                flower2: `<svg viewBox="0 0 24 24" fill="#ffffff" stroke="#eab6c4" stroke-width="1"><circle cx="12" cy="12" r="3" fill="#d4af37" stroke="none"/><circle cx="12" cy="5" r="4"/><circle cx="12" cy="19" r="4"/><circle cx="5" cy="12" r="4"/><circle cx="19" cy="12" r="4"/><circle cx="7" cy="7" r="4"/><circle cx="17" cy="17" r="4"/><circle cx="7" cy="17" r="4"/><circle cx="17" cy="7" r="4"/></svg>`,
+                leaf: `<svg viewBox="0 0 24 24" fill="#8ba696"><path d="M12 22c0 0-8-4-8-12 0-3 2-5 5-6 2-1 4 0 5 1 1-1 3-2 5-1 3 1 5 3 5 6 0 8-8 12-8 12z"/></svg>`
+            };
+
+            const createParticle = (type, amount) => {
+                for (let i = 0; i < amount; i++) {
+                    const el = document.createElement('div');
+                    el.innerHTML = svgs[type];
+                    el.className = 'effect-particle anim-particle';
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = (type === 'sparkle') 
+                        ? (Math.random() * 250 + 100) * distanceMultiplier 
+                        : (Math.random() * 450 + 150) * distanceMultiplier;
+                    
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance - (isMobile ? 80 : 120);
+                    
+                    const rot = Math.random() * 720;
+                    const scale = (type === 'sparkle') 
+                        ? (Math.random() * 1.2 + 0.8) * sizeMultiplier 
+                        : (Math.random() * 2.0 + 1.2) * sizeMultiplier;
+                    const duration = Math.random() * 1.5 + 1.5;
+                    const size = (type === 'sparkle') ? 22 : 36;
+
+                    el.style.left = `${centerX - size/2}px`;
+                    el.style.top = `${centerY - size/2}px`;
+                    el.style.width = `${size}px`;
+                    el.style.height = `${size}px`;
+                    el.style.setProperty('--tx', `${tx}px`);
+                    el.style.setProperty('--ty', `${ty}px`);
+                    el.style.setProperty('--rot', `${rot}deg`);
+                    el.style.setProperty('--scale', scale);
+                    el.style.setProperty('--duration', `${duration}s`);
+
+                    fragment.appendChild(el);
+                    setTimeout(() => el.remove(), duration * 1000);
+                }
+            };
+
+            // Cantidades adaptadas
+            createParticle('sparkle', Math.floor(90 * countMultiplier));
+            createParticle('flower1', Math.floor(40 * countMultiplier));
+            createParticle('flower2', Math.floor(40 * countMultiplier));
+            createParticle('leaf', Math.floor(40 * countMultiplier));
+
+            document.body.appendChild(fragment);
+        }
+    </script>
+</body>
+</html>
