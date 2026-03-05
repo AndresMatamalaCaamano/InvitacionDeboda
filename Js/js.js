@@ -54,7 +54,7 @@
             setTimeout(() => {
                 // Reemplaza 'invitacion_principal.html' con el nombre real de tu archivo destino
                 window.location.href = 'info.html';
-            }, 3500); // Espera 3.5 segundos en total antes de redirigir
+            }, 3000); // Espera 3.5 segundos en total antes de redirigir
         }
 
         // Función generadora de Brillos (Optimizada para Móviles)
@@ -113,7 +113,7 @@
                     el.style.setProperty('--duration', `${duration}s`);
 
                     fragment.appendChild(el);
-                    setTimeout(() => el.remove(), duration * 1000);
+                    setTimeout(() => el.remove(), duration * 750);
                 }
             };
 
