@@ -24,7 +24,7 @@
                 extend: {
                     colors: {
                         gold: {
-                            DEFAULT: '#7F9C86', // Verde Salvia (Sobre)
+                            DEFAULT: '#7F9C86', // Verde Salvia sutil
                             light: '#E2A9B6', // Rosa Rubor (Sello)
                             dark: '#4A5D4E', // Verde Salvia Oscuro
                             dim: 'rgba(127, 156, 134, 0.1)',
@@ -118,24 +118,23 @@
         .watercolor-blob {
             position: absolute;
             background: radial-gradient(circle at center, rgba(127, 156, 134, 0.25) 0%, rgba(127, 156, 134, 0.05) 50%, transparent 70%);
-            /* Eliminado filter: blur(40px) para mejorar rendimiento drásticamente */
             z-index: 0;
             pointer-events: none;
-            border-radius: 50%; /* Reemplaza el border-radius cambiante por uno fijo para GPU */
+            border-radius: 50%;
             animation: blob-float 12s ease-in-out infinite alternate;
-            will-change: transform; /* Acelera por hardware */
+            will-change: transform;
         }
 
         /* --- Estilo Tarjeta Papelería Premium --- */
         .stationery-card {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px); /* Reducido de 12px a 8px para mejor FPS */
+            backdrop-filter: blur(8px);
             border-radius: 16px;
             position: relative;
             box-shadow: 0 15px 35px -5px rgba(127, 156, 134, 0.12), 0 5px 15px -5px rgba(0, 0, 0, 0.04);
             transition: transform 0.4s ease-out, box-shadow 0.4s ease;
             will-change: transform;
-            -webkit-backface-visibility: hidden; /* Previene flickering */
+            -webkit-backface-visibility: hidden;
         }
         .stationery-card::before {
             content: '';
@@ -252,7 +251,6 @@
                               url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80');
             background-position: center;
             background-size: cover;
-            /* Eliminado el background-attachment: fixed que causaba repaints excesivos al hacer scroll */
         }
 
         /* --- Animaciones Optimadas --- */
@@ -275,6 +273,18 @@
             100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(127, 156, 134, 0); opacity: 1; }
         }
         .pulse-ring-anim { animation: pulse-ring 3s cubic-bezier(0.215, 0.61, 0.355, 1) infinite; will-change: transform, opacity; }
+
+        /* --- Animaciones Hojas Line-Art --- */
+        @keyframes branch-sway-1 {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            50% { transform: rotate(3deg) translateY(-5px); }
+        }
+        @keyframes branch-sway-2 {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            50% { transform: rotate(-3deg) translateY(5px); }
+        }
+        .branch-sway-1 { transform-origin: center left; animation: branch-sway-1 14s ease-in-out infinite; will-change: transform; }
+        .branch-sway-2 { transform-origin: center right; animation: branch-sway-2 16s ease-in-out infinite; will-change: transform; }
 
         /* --- Calendario Interno --- */
         .calendar-day {
@@ -376,6 +386,113 @@
 </head>
 <body class="antialiased selection:bg-gold selection:text-white">
 
+    <!-- REPOSITORIO SVG (Oculto) -->
+    <!-- Este SVG contiene el diseño exacto que pediste, modularizado para usarlo varias veces sin pesar -->
+    <svg class="hidden">
+        <defs>
+            <g id="floral-line-art" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Tallo 1 -->
+                <path d="M120,300 C110,200 130,100 90,40" />
+                <!-- Tallo 2 -->
+                <path d="M100,300 C130,220 90,120 130,60" />
+                
+                <!-- Flor 1 -->
+                <g transform="translate(90, 40) rotate(-20) scale(1.5)">
+                    <path d="M0,0 C-10,-10 -5,-25 0,-30 C5,-25 10,-10 0,0 Z" />
+                    <path d="M-3,-5 C-15,-5 -20,-15 -15,-20 C-10,-15 -5,-10 -3,-5" />
+                    <path d="M3,-5 C15,-5 20,-15 15,-20 C10,-15 5,-10 3,-5" />
+                    <path d="M-15,-20 C-25,-15 -20,0 -10,-2" />
+                    <path d="M15,-20 C25,-15 20,0 10,-2" />
+                    <path d="M-12,-2 Q0,5 12,-2" />
+                </g>
+
+                <!-- Flor 2 -->
+                <g transform="translate(130, 60) rotate(15) scale(1.3)">
+                    <path d="M0,0 C-10,-10 -5,-25 0,-30 C5,-25 10,-10 0,0 Z" />
+                    <path d="M-3,-5 C-15,-5 -20,-15 -15,-20 C-10,-15 -5,-10 -3,-5" />
+                    <path d="M3,-5 C15,-5 20,-15 15,-20 C10,-15 5,-10 3,-5" />
+                    <path d="M-15,-20 C-25,-15 -20,0 -10,-2" />
+                    <path d="M15,-20 C25,-15 20,0 10,-2" />
+                    <path d="M-12,-2 Q0,5 12,-2" />
+                </g>
+
+                <!-- Hojas puntiagudas con nervadura (idénticas a la referencia) -->
+                <!-- Izquierda -->
+                <g transform="translate(118, 260) rotate(-45) scale(1.2)">
+                    <path d="M0,0 C-15,-15 -15,-35 0,-50 C15,-35 15,-15 0,0 Z" />
+                    <path d="M0,0 Q3,-25 0,-50" />
+                </g>
+                <g transform="translate(125, 170) rotate(-60) scale(1.1)">
+                    <path d="M0,0 C-15,-15 -15,-35 0,-50 C15,-35 15,-15 0,0 Z" />
+                    <path d="M0,0 Q3,-25 0,-50" />
+                </g>
+                <g transform="translate(120, 90) rotate(-30) scale(1)">
+                    <path d="M0,0 C-15,-15 -15,-35 0,-50 C15,-35 15,-15 0,0 Z" />
+                    <path d="M0,0 Q3,-25 0,-50" />
+                </g>
+                <g transform="translate(110, 130) rotate(-80) scale(1.1)">
+                    <path d="M0,0 C-15,-15 -15,-35 0,-50 C15,-35 15,-15 0,0 Z" />
+                    <path d="M0,0 Q3,-25 0,-50" />
+                </g>
+
+                <!-- Derecha -->
+                <g transform="translate(108, 220) rotate(30) scale(1.4)">
+                    <path d="M0,0 C-15,-15 -15,-35 0,-50 C15,-35 15,-15 0,0 Z" />
+                    <path d="M0,0 Q3,-25 0,-50" />
+                </g>
+                <g transform="translate(115, 130) rotate(45) scale(1.3)">
+                    <path d="M0,0 C-15,-15 -15,-35 0,-50 C15,-35 15,-15 0,0 Z" />
+                    <path d="M0,0 Q3,-25 0,-50" />
+                </g>
+                <g transform="translate(100, 180) rotate(60) scale(1.1)">
+                    <path d="M0,0 C-15,-15 -15,-35 0,-50 C15,-35 15,-15 0,0 Z" />
+                    <path d="M0,0 Q3,-25 0,-50" />
+                </g>
+
+                <!-- Detalles botánicos (bolitas) -->
+                <circle cx="85" cy="180" r="2.5" fill="currentColor" />
+                <path d="M110,195 Q95,190 85,180" />
+
+                <circle cx="155" cy="120" r="2.5" fill="currentColor" />
+                <path d="M125,115 Q145,125 155,120" />
+            </g>
+        </defs>
+    </svg>
+
+    <!-- DECORACIÓN GLOBAL DE HOJAS SUTILES (AMBOS LADOS) -->
+    <!-- Inicialmente con opacity-0. El JS lo cambiará a opacity-100 al pasar el Hero -->
+    <div id="global-leaves" class="fixed inset-0 pointer-events-none z-[5] opacity-0 transition-opacity duration-1000 ease-in-out">
+        
+        <!-- Izquierda Superior -->
+        <div class="absolute top-[5%] -left-16 md:-left-24 w-64 h-64 md:w-[450px] md:h-[450px] text-gold opacity-[0.35] branch-sway-1">
+            <svg viewBox="0 0 200 300" class="w-full h-full transform rotate-[15deg]">
+                <use href="#floral-line-art" />
+            </svg>
+        </div>
+
+        <!-- Derecha Superior -->
+        <div class="absolute top-[10%] -right-16 md:-right-24 w-64 h-64 md:w-[450px] md:h-[450px] text-gold opacity-[0.35] branch-sway-2">
+            <!-- scale-x-[-1] es para espejar el diseño a la derecha -->
+            <svg viewBox="0 0 200 300" class="w-full h-full transform scale-x-[-1] -rotate-[15deg]">
+                <use href="#floral-line-art" />
+            </svg>
+        </div>
+
+        <!-- Izquierda Inferior -->
+        <div class="absolute bottom-[10%] -left-20 md:-left-32 w-72 h-72 md:w-[500px] md:h-[500px] text-gold opacity-[0.25] branch-sway-1" style="animation-duration: 18s;">
+            <svg viewBox="0 0 200 300" class="w-full h-full transform rotate-[35deg]">
+                <use href="#floral-line-art" />
+            </svg>
+        </div>
+
+        <!-- Derecha Inferior -->
+        <div class="absolute bottom-[5%] -right-20 md:-right-32 w-72 h-72 md:w-[500px] md:h-[500px] text-gold opacity-[0.25] branch-sway-2" style="animation-duration: 20s;">
+            <svg viewBox="0 0 200 300" class="w-full h-full transform scale-x-[-1] -rotate-[25deg]">
+                <use href="#floral-line-art" />
+            </svg>
+        </div>
+    </div>
+
     <!-- ZONA DE MÚSICA -->
     <audio id="weddingMusic" loop preload="none">
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
@@ -392,8 +509,8 @@
         </div>
     </div>
 
-    <!-- HERO SECTION -->
-    <section class="relative min-h-[100dvh] w-full overflow-hidden hero-bg flex flex-col justify-center items-center text-center px-4 pt-10">
+    <!-- HERO SECTION (Añadido ID para detectar cuándo salimos de esta sección) -->
+    <section id="hero-section" class="relative min-h-[100dvh] w-full overflow-hidden hero-bg flex flex-col justify-center items-center text-center px-4 pt-10">
         
         <div class="absolute inset-0 bg-gradient-to-b from-stone/60 via-stone/30 to-stone/70 pointer-events-none"></div>
 
@@ -433,7 +550,7 @@
     <!-- FAMILIA (MASCOTAS) -->
     <section class="py-12 xs:py-20 md:py-36 relative overflow-hidden">
         <div class="watermark font-serif uppercase tracking-[0.2em]">FAMILIA</div>
-        <!-- Bloques decorativos ahora sin blurs pesados -->
+        <!-- Bloques decorativos -->
         <div class="watercolor-blob w-60 h-60 md:w-[500px] md:h-[500px] top-0 left-[-50px] md:left-[-100px] opacity-80"></div>
         <div class="watercolor-blob w-48 h-48 md:w-[400px] md:h-[400px] bottom-0 right-[-30px] md:right-[-50px] opacity-80" style="background: radial-gradient(circle at center, rgba(226, 169, 182, 0.25) 0%, rgba(226,169,182, 0.05) 50%, transparent 70%);"></div>
 
@@ -491,8 +608,7 @@
 
     <!-- FECHA Y CUENTA ATRÁS -->
     <section class="py-12 xs:py-20 md:py-32 relative flex items-center justify-center overflow-hidden">
-        <div class="absolute top-4 xs:top-10 left-2 xs:left-4 md:left-20 text-gold-light opacity-40 animate-float text-2xl xs:text-3xl md:text-5xl transform rotate-12">🌿</div>
-        <div class="absolute bottom-10 xs:bottom-20 right-2 xs:right-4 md:right-24 text-gold-light opacity-40 animate-float text-3xl xs:text-4xl md:text-6xl transform -rotate-12" style="animation-delay: 2s;">🌸</div>
+        
 
         <div class="container mx-auto px-4 xs:px-6 max-w-7xl relative z-10">
             <div class="grid lg:grid-cols-2 gap-10 xs:gap-16 md:gap-24 items-center">
@@ -776,7 +892,6 @@
     <!-- FOOTER -->
     <section class="relative py-16 xs:py-24 md:py-40 bg-stone text-white overflow-hidden flex flex-col items-center justify-center text-center">
         <div class="absolute inset-0 z-0">
-            <img loading="lazy" src="https://images.unsplash.com/photo-1522673607200-1645062cd958?auto=format&fit=crop&w=1920&q=80" class="w-full h-full object-cover opacity-15 filter sepia-[0.3]">
             <div class="absolute inset-0 bg-gradient-to-t from-stone via-stone/90 to-transparent"></div>
         </div>
 
@@ -833,30 +948,24 @@
                 </div>
 
                 <div class="mt-auto relative z-10">
-                    <div class="font-mono text-lg xs:text-2xl md:text-[28px] font-bold tracking-[0.15em] embossed-text mb-1 xs:mb-3">
-                       <span id="datoCuenta">1234 5678</span>
+                    <div class="font-mono text-lg xs:text-xl md:text-[28px] font-bold tracking-[0.1em] md:tracking-[0.15em] embossed-text mb-1.5 xs:mb-3">
+                        <span id="datoCuenta">1234 5678</span>
                     </div>
                     
                     <div class="flex justify-between items-end">
-                        <div class="flex flex-col gap-1">
-                            <div class="flex items-center gap-1 xs:gap-2">
-                                <div class="text-[4px] xs:text-[6px] md:text-[7px] font-sans font-bold leading-none uppercase text-white/60">
+                        <div class="flex flex-col">
+                            <div class="flex items-center gap-1.5 xs:gap-2 mb-0.5 xs:mb-1">
+                                <div class="text-[5px] xs:text-[6px] md:text-[7px] font-sans font-bold leading-tight uppercase text-white/60">
                                     Valida<br>Hasta
                                 </div>
-                                <div class="font-mono text-[8px] xs:text-xs md:text-sm font-semibold text-white drop-shadow-sm leading-none tracking-widest">11/26</div>
+                                <div class="font-mono text-[9px] xs:text-[11px] md:text-sm font-semibold text-white drop-shadow-sm leading-none tracking-widest">11/26</div>
                             </div>
-                            <div class="font-mono text-[7px] xs:text-[11px] md:text-xs font-semibold text-white/90 drop-shadow-sm tracking-wider mt-1" id="datoRut">RUT 12.345.678-9</div>
+                            <div class="font-mono text-[8px] xs:text-[10px] md:text-xs font-medium text-white/90 drop-shadow-sm tracking-normal xs:tracking-wide whitespace-nowrap leading-none" id="datoRut">RUT 12.345.678-9</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex justify-between items-end mt-2 xs:mt-4 relative z-10 border-t border-white/10 pt-1 xs:pt-3">
-                    <span class="font-sans text-[8px] xs:text-[13px] md:text-sm font-bold uppercase tracking-widest text-white drop-shadow-md leading-none" id="datoNombre">Arial y Paz</span>
-                    
-                    <div class="flex items-center justify-end opacity-80 leading-none">
-                        <span class="font-serif italic text-lg xs:text-2xl md:text-3xl text-gold-light">A & P</span>
-                    </div>
-                </div>
+                <span id="datoNombre" class="hidden">Ariel y Paz</span>
             </div>
 
             <span id="datoEmail" class="hidden">novios@ejemplo.com</span>
@@ -875,13 +984,37 @@
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // AOS más ligero y optimizado
+        // AOS
         AOS.init({
-            duration: 800, // Menos tiempo para evitar que las animaciones estorben el scroll
+            duration: 800,
             once: true,
             easing: 'ease-out-cubic',
             offset: 20 
         });
+
+        // --- LÓGICA DE APARICIÓN DE HOJAS AL BAJAR DEL HERO ---
+        const globalLeaves = document.getElementById('global-leaves');
+        const heroSection = document.getElementById('hero-section');
+
+        if (globalLeaves && heroSection) {
+            const heroObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // Si el hero YA NO intersecta (bajamos al menos la mitad), mostramos las hojas
+                    if (!entry.isIntersecting) {
+                        globalLeaves.classList.remove('opacity-0');
+                        globalLeaves.classList.add('opacity-100');
+                    } else {
+                        // Si volvemos arriba (al hero), ocultamos las hojas
+                        globalLeaves.classList.remove('opacity-100');
+                        globalLeaves.classList.add('opacity-0');
+                    }
+                });
+            }, {
+                // Intersecta hasta que el hero sale casi por completo (ej. 30% visible)
+                threshold: 0.3 
+            });
+            heroObserver.observe(heroSection);
+        }
 
         // --- LÓGICA DEL MODAL ---
         const modal = document.getElementById('bankModal');
@@ -893,7 +1026,7 @@
 
         function closeModal() {
             modal.classList.remove('active');
-            document.body.style.overflow = ''; // Reseteado en vez de 'auto' para prevenir scrollbars dobles
+            document.body.style.overflow = ''; 
         }
 
         function copyTextToClipboard(text, onSuccess) {
