@@ -429,16 +429,9 @@
             // NOTA: Para la vista previa, en lugar de redirigir, muestro un mensaje animado. 
             // Para producción, descomenta tu window.location original.
             setTimeout(() => {
-                pageWrapper.style.opacity = '0';
-                setTimeout(() => {
-                    pageWrapper.innerHTML = `<h1 class="font-serif-elegant text-3xl sm:text-4xl text-[#5a7d6a] italic text-center drop-shadow-sm transition-opacity duration-1000 opacity-0" id="redirect-text">Navegando a la invitación...</h1>`;
-                    pageWrapper.style.opacity = '1';
-                    setTimeout(() => document.getElementById('redirect-text').style.opacity = '1', 100);
-                }, 1000);
-                
-                // Tu código original:
-                // window.location.href = 'info.html';
-            }, 3000); 
+                // Reemplaza 'invitacion_principal.html' con el nombre real de tu archivo destino
+                window.location.href = 'info.html';
+            }, 3000); // Espera 3.5 segundos en total antes de redirigir
         }
 
         // Función generadora de Brillos (Optimizada para Móviles)
@@ -454,7 +447,7 @@
             const sizeMultiplier = isMobile ? 0.8 : 1;
             
             // Reducimos las partículas un 60% en móviles para mantener los 60fps intactos
-            const countMultiplier = isMobile ? 0.4 : 1; 
+            const countMultiplier = isMobile ? 0.3055 : 2; 
 
             const fragment = document.createDocumentFragment();
 
@@ -471,8 +464,8 @@
                         </radialGradient>
                     </defs>
                     <path d="M12 22C8 20 2 14 3 9C4 5 9 4 11 6C11.5 5.5 12.5 5.5 13 6C15 4 20 5 21 9C22 14 16 20 12 22Z" fill="url(#grad-p1)" stroke="#000" stroke-width="0.2"/>
-                        <g stroke="#4a1c2a" stroke-width="0.15" opacity="0.6" fill="none">
-                            <path d="M12 21.5 Q12 14 12 7"/><path d="M12 21.5 Q9 16 7 10"/><path d="M12 21.5 Q15 16 17 10"/>
+                        <g stroke="#000" stroke-width="0.27" opacity="0.7" fill="none">
+                            <path d="M12 21.5 Q12 14 12 7" /><path d="M12 21.5 Q9 16 7 10"/><path d="M12 21.5 Q15 16 17 10"/>
                         </g>
                     </svg>`,
                 
@@ -486,7 +479,7 @@
                         </radialGradient>
                     </defs>
                     <path d="M8 22C4 20 2 14 5 7C8 2 13 4 16 8C19 12 17 18 8 22Z" fill="url(#grad-p2)" stroke="#000" stroke-width="0.2"/>
-                        <g stroke="#4a1c2a" stroke-width="0.15" opacity="0.7" fill="none">
+                        <g stroke="#000" stroke-width="0.27" opacity="0.7" fill="none">
                             <path d="M8.5 21.5 Q10 14 13 8"/><path d="M8.5 21.5 Q 7 15 6 10"/>
                         </g>
                     </svg>`,
@@ -496,25 +489,25 @@
                 petal3: `<svg viewBox="0 0 24 24" class="w-full h-full">
                     <defs><radialGradient id="grad-p3" cx="50%" cy="100%" r="100%"><stop offset="0%" stop-color="#8c445a"/><stop offset="100%" stop-color="#fff"/></radialGradient></defs>
                         <path d="M12 22C10 21 5 14 6 7C7 2 12 1 12 6C12 1 17 2 18 7C19 14 14 21 12 22Z" fill="url(#grad-p3)" stroke="#000" stroke-width="0.2"/>
-                        <path d="M12 21.5 L12 7" stroke="#4a1c2a" stroke-width="0.15" opacity="0.6" fill="none"/>
+                        <path d="M12 21.5 L12 7" stroke="#000" stroke-width="0.27" opacity="0.6" fill="none"/>
                     </svg>`,
 
                 petal4: `<svg viewBox="0 0 24 24" class="w-full h-full">
                     <defs><radialGradient id="grad-p4" cx="50%" cy="100%" r="100%"><stop offset="0%" stop-color="#8c445a"/><stop offset="100%" stop-color="#fdf2f0"/></radialGradient></defs>
                         <path d="M12 22C8 21 4 15 4 8C4 4 10 3 12 5C14 3 20 4 20 8C20 15 16 21 12 22Z" fill="url(#grad-p4)" stroke="#000" stroke-width="0.2"/>
-                    <g stroke="#4a1c2a" stroke-width="0.15" opacity="0.7" fill="none"><path d="M12 21.5 Q10.5 15 11 8"/><path d="M12 21.5 Q13.5 15 14 8"/></g>
+                    <g stroke="#000" stroke-width="0.27" opacity="0.7" fill="none"><path d="M12 21.5 Q10.5 15 11 8"/><path d="M12 21.5 Q13.5 15 14 8"/></g>
                     </svg>`,
 
                 petal5: `<svg viewBox="0 0 24 24" class="w-full h-full">
                     <defs><radialGradient id="grad-p5" cx="50%" cy="100%" r="100%"><stop offset="0%" stop-color="#8c445a"/><stop offset="100%" stop-color="#fff"/></radialGradient></defs>
                         <path d="M6 22C4 20 2 12 8 6C12 2 18 4 21 9C23 15 18 21 6 22Z" fill="url(#grad-p5)" stroke="#000" stroke-width="0.2"/>
-                        <path d="M6.5 21.5 Q 12 16 16.5 10.5" stroke="#4a1c2a" stroke-width="0.15" fill="none" opacity="0.5"/>
+                        <path d="M6.5 21.5 Q 12 16 16.5 10.5" stroke="#000" stroke-width="0.27" fill="none" opacity="0.5"/>
                     </svg>`,
 
                 petal6: `<svg viewBox="0 0 24 24" class="w-full h-full">
                     <defs><radialGradient id="grad-p6" cx="50%" cy="100%" r="100%"><stop offset="0%" stop-color="#8c445a"/><stop offset="100%" stop-color="#fdf2f0"/></radialGradient></defs>
                         <path d="M12 20C9 18 6 14 6 9C6 6 10 5 12 7C14 5 18 6 18 9C18 14 15 18 12 20Z" fill="url(#grad-p6)" stroke="#000" stroke-width="0.2"/>
-                        <path d="M12 19.5Q12 13 12 9" stroke="#4a1c2a" stroke-width="0.2" fill="none" opacity="0.6"/>
+                        <path d="M12 19.5Q12 13 12 9" stroke="#000" stroke-width="0.27" fill="none" opacity="0.6"/>
                     </svg>`,
                 
                 
@@ -538,7 +531,7 @@
                              M12.3 9 Q10.5 7.5 10.8 5.5 
                              M12.2 5.5 Q13 4.5 12.8 3 
                              M12.1 6 Q11 5 11.2 3.5" 
-                          stroke="#6e8a79" stroke-width="0.5" fill="none" stroke-linecap="round"/>
+                          stroke="#000" stroke-width="0.27" fill="none" stroke-linecap="round"/>
                 </svg>`
 
 
@@ -582,14 +575,14 @@
             };
 
             // Cantidades adaptadas
-            createParticle('sparkle', Math.floor(90 * countMultiplier));
-            createParticle('petal1', Math.floor(30 * countMultiplier)); 
-            createParticle('petal2', Math.floor(30 * countMultiplier));
-            createParticle('petal3', Math.floor(30 * countMultiplier));
-            createParticle('petal4', Math.floor(30 * countMultiplier));
-            createParticle('petal5', Math.floor(30 * countMultiplier));
-            createParticle('petal6', Math.floor(30 * countMultiplier));
-            createParticle('leaf', Math.floor(60 * countMultiplier)); // Menos hojas para destacar los pétalos
+            createParticle('sparkle', Math.floor(50 * countMultiplier));
+            createParticle('petal1', Math.floor(50 * countMultiplier)); 
+            createParticle('petal2', Math.floor(50 * countMultiplier));
+            createParticle('petal3', Math.floor(50 * countMultiplier));
+            createParticle('petal4', Math.floor(50 * countMultiplier));
+            createParticle('petal5', Math.floor(50 * countMultiplier));
+            createParticle('petal6', Math.floor(50 * countMultiplier));
+            createParticle('leaf', Math.floor(75 * countMultiplier)); // Menos hojas para destacar los pétalos
 
             document.body.appendChild(fragment);
         }
