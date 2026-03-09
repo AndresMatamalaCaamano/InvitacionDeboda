@@ -11,13 +11,236 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Pinyon+Script&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="Css\Css.css">
+    <style>
+        /* Configuraciones generales */
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f2efeb;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .font-serif-elegant { font-family: 'Playfair Display', serif; }
+        .font-cursive { font-family: 'Pinyon Script', cursive; }
+        .font-seal { font-family: 'Cinzel', serif; }
 
+        /* Textura para el sobre de carta */
+        .paper-texture {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            mix-blend-mode: multiply;
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            z-index: 50;
+        }
+
+        .polka-dots {
+            background-color: #fdfbfb;
+            background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='12' r='4' fill='none' stroke='%23f4c2d0' stroke-width='1.5' opacity='0.7'/%3E%3C/svg%3E");
+            background-size: 30px 30px;
+        }
+
+        /* Contenedor principal con perspectiva */
+        .envelope-wrapper { 
+            perspective: 2000px; 
+            width: 85vw;
+            max-width: 400px;
+            position: relative;
+        }
+        
+        .envelope-wrapper::before {
+            content: "";
+            display: block;
+            padding-bottom: 70%; 
+        }
+        
+        /* FIX iOS: Animación de la solapa SIN filter drop-shadow */
+        .flap-top {
+            transform-origin: top;
+            transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 40;
+            transform-style: preserve-3d;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        
+        .flap-top.open {
+            transform: rotateX(180deg) translateZ(0);
+        }
+        
+        .letter-pull {
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 20;
+            will-change: transform;
+        }
+        .letter-pull.open {
+            transform: translateY(-65%) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .wax-seal {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .wax-seal.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .wax-seal.open {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+            pointer-events: none;
+        }
+
+        .guest-label-anim {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-10px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+        .guest-label-anim.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .guest-label-anim.open {
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px);
+            pointer-events: none;
+        }
+        
+
+        .intro-anim-container {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.5s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+
+        .intro-anim-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(0.5deg); }
+        }
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .text-fade-anim { opacity: 0; transition: opacity 1s ease; }
+        .text-fade-anim.show { opacity: 1; }
+
+        .title-fade-anim {
+            opacity: 0;
+            transform: translateY(-15px);
+            transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+        .title-fade-anim.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FIX DE RENDIMIENTO: translate3d para uso de GPU en móviles */
+        .effect-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 9999;
+            will-change: transform, opacity;
+        }
+        @keyframes particle-explode {
+            0% { transform: translate3d(0, 0, 0) scale(0) rotate(0deg); opacity: 1; }
+            20% { opacity: 1; }
+            80% { opacity: 0.8; }
+            100% { transform: translate3d(var(--tx), calc(var(--ty) + 100px), 0) scale(var(--scale)) rotate(var(--rot)); opacity: 0; }
+        }
+        .anim-particle {
+            animation: particle-explode var(--duration) cubic-bezier(0.25, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInScreen {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- NUEVAS ANIMACIONES INTRODUCTORIAS --- */
+        .anim-heart {
+            /* Latido dura 0.5 segundos y se repite exactamente 2 veces */
+            animation: beat-scale 0.5s ease-in-out 2 forwards;
+            transform-origin: center;
+        }
+        .anim-rays {
+            /* Rayos y círculo aparecen sincronizados con el latido, repitiéndose 2 veces */
+            animation: beat-appear 0.5s ease-in-out 2 forwards;
+            opacity: 0;
+            transform-origin: center;
+        }
+        @keyframes beat-scale {
+            0%, 100% { transform: scale(1); }
+            30% { transform: scale(1.15); }
+        }
+        @keyframes beat-appear {
+            0% { opacity: 0; transform: scale(0.85); }
+            25% { opacity: 1; transform: scale(1.05); }
+            60% { opacity: 0; transform: scale(1.1); }
+            100% { opacity: 0; transform: scale(1); }
+        }
+
+        .circle-expand {
+            animation: smooth-expand 0.8s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+        }
+        @keyframes smooth-expand {
+            0% { transform: scale(1); }
+            20% { transform: scale(0.8); } /* Pequeño retroceso antes de estallar */
+            100% { transform: scale(100); } /* Expansión masiva */
+        }
+        
+        .fade-out-overlay {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body class="h-full w-full relative antialiased selection:bg-[#eab6c4] selection:text-white flex items-center justify-center overflow-hidden">
 
-    <div id="page-wrapper" class="w-full absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-1000">
+    <!-- OVERLAY DE INTRODUCCIÓN (NUEVO) -->
+    <div id="pre-intro-overlay" class="absolute inset-0 z-[9999] flex items-center justify-center bg-[#f2efeb] transition-opacity duration-1000 overflow-hidden">
         
+        <!-- Contenedor agrupado que realizará la expansión final -->
+        <div id="intro-pulse-group" class="relative flex items-center justify-center w-40 h-40 z-10">
+            
+            <!-- Grupo de Círculo y Rayos separados para centrado perfecto -->
+            <svg class="anim-rays absolute inset-0 w-full h-full text-[#7c9787]" viewBox="0 0 100 100" overflow="visible">
+                <!-- Círculo que encierra al corazón -->
+                <circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" stroke-width="2.5" />
+                
+                <!-- Puntos circulares alrededor (Reemplazo de las líneas) -->
+                <g fill="currentColor" stroke="none">
+                    <!-- Rectos -->
+                    <circle cx="50" cy="8" r="3.5" />
+                    <circle cx="50" cy="92" r="3.5" />
+                    <circle cx="8" cy="50" r="3.5" />
+                    <circle cx="92" cy="50" r="3.5" />
+                    <!-- Diagonales -->
+                    <g transform="rotate(45 50 50)">
+                        <circle cx="50" cy="8" r="3.5" />
+                        <circle cx="50" cy="92" r="3.5" />
+                        <circle cx="8" cy="50" r="3.5" />
+                        <circle cx="92" cy="50" r="3.5" />
+                    </g>
+                </g>
+            </svg>
+
+            <!-- Corazón Central (Palpita) independizado -->
+            <!-- mt-[2px] compensa el peso visual superior del corazón para que se vea perfectamente en el centro del círculo -->
+            <svg class="anim-heart relative w-14 h-14 text-[#7c9787] mt-[2px]" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+
+        </div>
+    </div>
+
+    <div id="page-wrapper" class="w-full absolute inset-0 z-50 flex items-center justify-center transition-opacity duration-1000">
         
         <div id="intro-presentation" class="intro-anim-container flex flex-col items-center w-full px-4 pb-32 sm:pb-15">
             
@@ -126,6 +349,250 @@
         </div>
     </div>
 
-    <script src="Js\js.js"> </script>
+    <script>
+        // Animaciones de Entrada Inicial
+        window.addEventListener('load', () => {
+            const overlay = document.getElementById('pre-intro-overlay');
+            const pulseGroup = document.getElementById('intro-pulse-group');
+
+            // La animación se repite 2 veces exactas (0.5s cada una = 1.0s en total)
+            // Usamos un timeout de 1.0s para detonar la expansión justo cuando acaba el último latido
+            setTimeout(() => {
+                // Detonamos la expansión masiva del elemento contenedor
+                pulseGroup.classList.add('circle-expand');
+                
+                // Desvanecer el fondo para dejar ver el sobre
+                setTimeout(() => {
+                    overlay.classList.add('fade-out-overlay');
+                    
+                    // Iniciar la secuencia original del sobre de inmediato
+                    setTimeout(() => document.getElementById('intro-presentation').classList.add('show'), 100);
+                    setTimeout(() => document.getElementById('wedding-announcement').classList.add('show'), 600);
+                    setTimeout(() => document.getElementById('wax-seal').classList.add('show'), 1000);
+                    setTimeout(() => document.getElementById('guest-label').classList.add('show'), 1400);
+                    setTimeout(() => document.getElementById('instruction-wrapper').classList.add('show'), 2000);
+                    
+                    // Eliminar completamente el overlay del DOM por seguridad
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                    }, 1000); 
+
+                }, 500); // Esto sucede 500ms después de que inicia la expansión (en el pico de la explosión)
+
+            }, 1000); // 1000 milisegundos = 2 latidos más rápidos
+        });
+
+        let isOpened = false;
+
+        function openEnvelope() {
+            if (isOpened) return;
+            isOpened = true;
+
+            const seal = document.getElementById('wax-seal');
+            const guestLabel = document.getElementById('guest-label');
+            const flap = document.getElementById('envelope-flap');
+            const fakeShadow = document.getElementById('flap-fake-shadow');
+            const letter = document.getElementById('envelope-letter');
+            const textInstr = document.getElementById('instruction-wrapper');
+            const announcement = document.getElementById('wedding-announcement');
+            const pageWrapper = document.getElementById('page-wrapper');
+
+            // 1. Ocultar UI exterior
+            seal.classList.add('open');
+            guestLabel.classList.add('open');
+            textInstr.classList.remove('show');
+            announcement.style.opacity = '0';
+            
+            // Ocultar sombra falsa antes de rotar para evitar bugs en iOS
+            fakeShadow.style.opacity = '0';
+
+            // 2. Disparar los brillos y pétalos
+            spawnEffects();
+
+            // 3. Abrir solapa
+            setTimeout(() => {
+                flap.classList.add('open');
+                
+                // FIX iOS: Cambiar Z-Index por JS a la mitad del giro en lugar de CSS
+                setTimeout(() => {
+                    flap.style.zIndex = '15';
+                }, 400); // Casi a la mitad de los 0.9s de la transición
+
+            }, 250);
+
+            // 4. Sacar carta
+            setTimeout(() => {
+                letter.classList.add('open');
+            }, 1000);
+
+            // 5. Redireccionar a la siguiente página HTML 
+            // NOTA: Para la vista previa, en lugar de redirigir, muestro un mensaje animado. 
+            // Para producción, descomenta tu window.location original.
+            setTimeout(() => {
+                pageWrapper.style.opacity = '0';
+                setTimeout(() => {
+                    pageWrapper.innerHTML = `<h1 class="font-serif-elegant text-3xl sm:text-4xl text-[#5a7d6a] italic text-center drop-shadow-sm transition-opacity duration-1000 opacity-0" id="redirect-text">Navegando a la invitación...</h1>`;
+                    pageWrapper.style.opacity = '1';
+                    setTimeout(() => document.getElementById('redirect-text').style.opacity = '1', 100);
+                }, 1000);
+                
+                // Tu código original:
+                // window.location.href = 'info.html';
+            }, 3000); 
+        }
+
+        // Función generadora de Brillos (Optimizada para Móviles)
+        function spawnEffects() {
+            const seal = document.getElementById('wax-seal');
+            const rect = seal.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            // FIX DE RENDIMIENTO: Detección de celular para reducir la carga de memoria
+            const isMobile = window.innerWidth < 640;
+            const distanceMultiplier = isMobile ? 0.6 : 1;
+            const sizeMultiplier = isMobile ? 0.8 : 1;
+            
+            // Reducimos las partículas un 60% en móviles para mantener los 60fps intactos
+            const countMultiplier = isMobile ? 0.4 : 1; 
+
+            const fragment = document.createDocumentFragment();
+
+            const svgs = {
+                sparkle: `<svg viewBox="0 0 24 24" fill="#d4af37"><path d="M12 0l2.5 8.5L23 11l-8.5 2.5L12 22l-2.5-8.5L1 11l8.5-2.5z"/></svg>`,
+                
+                /* Pétalo 1 (Rosa Suave) - Forma de pétalo de rosa ondulado con texturas delicadas desde la base */
+                petal1: `<svg viewBox="0 0 24 24" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="grad-p1" cx="50%" cy="100%" r="100%">
+                            <stop offset="0%" stop-color="#8c445a" />
+                            <stop offset="40%" stop-color="#dca0b1" />
+                            <stop offset="100%" stop-color="#ffffff" />
+                        </radialGradient>
+                    </defs>
+                    <path d="M12 22C8 20 2 14 3 9C4 5 9 4 11 6C11.5 5.5 12.5 5.5 13 6C15 4 20 5 21 9C22 14 16 20 12 22Z" fill="url(#grad-p1)" stroke="#000" stroke-width="0.2"/>
+                        <g stroke="#4a1c2a" stroke-width="0.15" opacity="0.6" fill="none">
+                            <path d="M12 21.5 Q12 14 12 7"/><path d="M12 21.5 Q9 16 7 10"/><path d="M12 21.5 Q15 16 17 10"/>
+                        </g>
+                    </svg>`,
+                
+                /* Pétalo 2 (Rosa Oscuro) - Forma ligeramente asimétrica para dar variedad y realismo */
+                petal2: `<svg viewBox="0 0 24 24" class="w-full h-full">
+                    <defs>
+                        <radialGradient id="grad-p2" cx="50%" cy="100%" r="100%">
+                            <stop offset="0%" stop-color="#8c445a" />
+                            <stop offset="50%" stop-color="#dca0b1" />
+                            <stop offset="100%" stop-color="#fdf2f0" />
+                        </radialGradient>
+                    </defs>
+                    <path d="M8 22C4 20 2 14 5 7C8 2 13 4 16 8C19 12 17 18 8 22Z" fill="url(#grad-p2)" stroke="#000" stroke-width="0.2"/>
+                        <g stroke="#4a1c2a" stroke-width="0.15" opacity="0.7" fill="none">
+                            <path d="M8.5 21.5 Q10 14 13 8"/><path d="M8.5 21.5 Q 7 15 6 10"/>
+                        </g>
+                    </svg>`,
+
+
+
+                petal3: `<svg viewBox="0 0 24 24" class="w-full h-full">
+                    <defs><radialGradient id="grad-p3" cx="50%" cy="100%" r="100%"><stop offset="0%" stop-color="#8c445a"/><stop offset="100%" stop-color="#fff"/></radialGradient></defs>
+                        <path d="M12 22C10 21 5 14 6 7C7 2 12 1 12 6C12 1 17 2 18 7C19 14 14 21 12 22Z" fill="url(#grad-p3)" stroke="#000" stroke-width="0.2"/>
+                        <path d="M12 21.5 L12 7" stroke="#4a1c2a" stroke-width="0.15" opacity="0.6" fill="none"/>
+                    </svg>`,
+
+                petal4: `<svg viewBox="0 0 24 24" class="w-full h-full">
+                    <defs><radialGradient id="grad-p4" cx="50%" cy="100%" r="100%"><stop offset="0%" stop-color="#8c445a"/><stop offset="100%" stop-color="#fdf2f0"/></radialGradient></defs>
+                        <path d="M12 22C8 21 4 15 4 8C4 4 10 3 12 5C14 3 20 4 20 8C20 15 16 21 12 22Z" fill="url(#grad-p4)" stroke="#000" stroke-width="0.2"/>
+                    <g stroke="#4a1c2a" stroke-width="0.15" opacity="0.7" fill="none"><path d="M12 21.5 Q10.5 15 11 8"/><path d="M12 21.5 Q13.5 15 14 8"/></g>
+                    </svg>`,
+
+                petal5: `<svg viewBox="0 0 24 24" class="w-full h-full">
+                    <defs><radialGradient id="grad-p5" cx="50%" cy="100%" r="100%"><stop offset="0%" stop-color="#8c445a"/><stop offset="100%" stop-color="#fff"/></radialGradient></defs>
+                        <path d="M6 22C4 20 2 12 8 6C12 2 18 4 21 9C23 15 18 21 6 22Z" fill="url(#grad-p5)" stroke="#000" stroke-width="0.2"/>
+                        <path d="M6.5 21.5 Q 12 16 16.5 10.5" stroke="#4a1c2a" stroke-width="0.15" fill="none" opacity="0.5"/>
+                    </svg>`,
+
+                petal6: `<svg viewBox="0 0 24 24" class="w-full h-full">
+                    <defs><radialGradient id="grad-p6" cx="50%" cy="100%" r="100%"><stop offset="0%" stop-color="#8c445a"/><stop offset="100%" stop-color="#fdf2f0"/></radialGradient></defs>
+                        <path d="M12 20C9 18 6 14 6 9C6 6 10 5 12 7C14 5 18 6 18 9C18 14 15 18 12 20Z" fill="url(#grad-p6)" stroke="#000" stroke-width="0.2"/>
+                        <path d="M12 19.5Q12 13 12 9" stroke="#4a1c2a" stroke-width="0.2" fill="none" opacity="0.6"/>
+                    </svg>`,
+                
+                
+                /* Hoja Botánica - Contorno dentado/ondulado realista con tallo y nervaduras detalladas */
+                leaf: `<svg viewBox="0 0 24 24" class="w-full h-full" overflow="visible">
+                    <!-- Tallo inferior -->
+                    <path d="M12 22 L12 24" stroke="#8ba696" stroke-width="1.5" stroke-linecap="round"/>
+                    <!-- Contorno de la hoja con borde aserrado orgánico -->
+                    <path d="M12 22.5 C14.5 21 16.5 18 15.5 15 C17.5 13 17.5 9 14.5 6 C14.5 4 13.5 2 12 1 C10.5 2 9.5 4 9.5 6 C6.5 9 6.5 13 8.5 15 C7.5 18 9.5 21 12 22.5 Z" fill="#8ba696" stroke="#000" stroke-width="0.2"/>
+                    <!-- Nervaduras internas conectadas perfectamente al tallo central -->
+                    <path d="M12 22.5 Q12.5 12 12 1.5 
+                             M12.2 20 Q14 19.5 14.5 18 
+                             M12.1 20.5 Q10 20 9.5 18.5 
+                             M12.4 17.5 Q14.5 16 15.5 14 
+                             M12.3 18 Q9.5 16.5 8.5 14.5 
+                             M12.6 14.5 Q15 12 15.5 10 
+                             M12.4 15 Q9 12.5 8.5 10.5 
+                             M12.5 11.5 Q14 9.5 13.8 7.5 
+                             M12.5 12 Q10 10 10.2 8 
+                             M12.4 8.5 Q13.5 7 13.2 5 
+                             M12.3 9 Q10.5 7.5 10.8 5.5 
+                             M12.2 5.5 Q13 4.5 12.8 3 
+                             M12.1 6 Q11 5 11.2 3.5" 
+                          stroke="#6e8a79" stroke-width="0.5" fill="none" stroke-linecap="round"/>
+                </svg>`
+
+
+
+            };
+
+            const createParticle = (type, amount) => {
+                for (let i = 0; i < amount; i++) {
+                    const el = document.createElement('div');
+                    el.innerHTML = svgs[type];
+                    el.className = 'effect-particle anim-particle';
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = (type === 'sparkle') 
+                        ? (Math.random() * 250 + 270) * distanceMultiplier 
+                        : (Math.random() * 450 + 255) * distanceMultiplier;
+                    
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance - (isMobile ? 90 : 120);
+                    
+                    const rot = Math.random() * 720;
+                    const scale = (type === 'sparkle') 
+                        ? (Math.random() * 1.2 + 0.8) * sizeMultiplier 
+                        : (Math.random() * 2.0 + 1.2) * sizeMultiplier;
+                    const duration = Math.random() * 1.5 + 1.5;
+                    const size = (type === 'sparkle') ? 22 : 36;
+
+                    el.style.left = `${centerX - size/2}px`;
+                    el.style.top = `${centerY - size/2}px`;
+                    el.style.width = `${size}px`;
+                    el.style.height = `${size}px`;
+                    el.style.setProperty('--tx', `${tx}px`);
+                    el.style.setProperty('--ty', `${ty}px`);
+                    el.style.setProperty('--rot', `${rot}deg`);
+                    el.style.setProperty('--scale', scale);
+                    el.style.setProperty('--duration', `${duration}s`);
+
+                    fragment.appendChild(el);
+                    setTimeout(() => el.remove(), duration * 1000);
+                }
+            };
+
+            // Cantidades adaptadas
+            createParticle('sparkle', Math.floor(90 * countMultiplier));
+            createParticle('petal1', Math.floor(30 * countMultiplier)); 
+            createParticle('petal2', Math.floor(30 * countMultiplier));
+            createParticle('petal3', Math.floor(30 * countMultiplier));
+            createParticle('petal4', Math.floor(30 * countMultiplier));
+            createParticle('petal5', Math.floor(30 * countMultiplier));
+            createParticle('petal6', Math.floor(30 * countMultiplier));
+            createParticle('leaf', Math.floor(60 * countMultiplier)); // Menos hojas para destacar los pétalos
+
+            document.body.appendChild(fragment);
+        }
+    </script>
 </body>
 </html>
