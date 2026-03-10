@@ -1,13 +1,33 @@
- /* Configuraciones generales */
+:root {
+            /* 👇 AJUSTA ESTE VALOR PARA ACERCAR O ALEJAR TODO EL HTML EN CELULARES 👇 */
+            /* 1.0 = Tamaño normal | 0.85 = Ligeramente alejado | 0.70 = Muy alejado */
+            --zoom-celular: 0.83; 
+        }
+
+        /* Clase maestra que aplica el zoom a los contenedores */
+        .zoom-control {
+            transform: scale(var(--zoom-celular));
+            transform-origin: center center;
+            transition: transform 0.5s ease;
+        }
+
+        /* Desactiva el zoom en computadoras y tablets (tamaño original) */
+        @media (min-width: 640px) {
+            .zoom-control {
+                transform: scale(1) !important;
+            }
+        }
+
+        /* Configuraciones generales */
         body {
             font-family: 'Lato', sans-serif;
             background-color: #f2efeb;
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
         }
-        .font-serif-elegant { font-family: 'Playfair Display', serif; }
-        .font-cursive { font-family: 'Pinyon Script', cursive; }
-        .font-seal { font-family: 'Cinzel', serif; }
+        
+        /* NUEVA TIPOGRAFÍA APLICADA */
+        .font-amiri { font-family: 'Amiri', serif; }
 
         /* Textura para el sobre de carta */
         .paper-texture {
@@ -94,7 +114,6 @@
             pointer-events: none;
         }
         
-
         .intro-anim-container {
             opacity: 0;
             transform: translateY(40px);
@@ -127,6 +146,17 @@
             transform: translateY(0);
         }
 
+        /* Animación para las flores enmarcadoras */
+        .floral-anim {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: opacity 1.5s ease, transform 1.5s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+        .floral-anim.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
         /* FIX DE RENDIMIENTO: translate3d para uso de GPU en móviles */
         .effect-particle {
             position: absolute;
@@ -147,4 +177,41 @@
         @keyframes fadeInScreen {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        /* --- NUEVAS ANIMACIONES INTRODUCTORIAS --- */
+        .anim-heart {
+            /* Latido dura 0.5 segundos y se repite exactamente 2 veces */
+            animation: beat-scale 0.5s ease-in-out 2 forwards;
+            transform-origin: center;
+        }
+        .anim-rays {
+            /* Rayos y círculo aparecen sincronizados con el latido, repitiéndose 2 veces */
+            animation: beat-appear 0.5s ease-in-out 2 forwards;
+            opacity: 0;
+            transform-origin: center;
+        }
+        @keyframes beat-scale {
+            0%, 100% { transform: scale(1); }
+            30% { transform: scale(1.15); }
+        }
+        @keyframes beat-appear {
+            0% { opacity: 0; transform: scale(0.85); }
+            25% { opacity: 1; transform: scale(1.05); }
+            60% { opacity: 0; transform: scale(1.1); }
+            100% { opacity: 0; transform: scale(1); }
+        }
+
+        .circle-expand {
+            animation: smooth-expand 0.8s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+        }
+        @keyframes smooth-expand {
+            0% { transform: scale(1); }
+            20% { transform: scale(0.8); } /* Pequeño retroceso antes de estallar */
+            100% { transform: scale(100); } /* Expansión masiva */
+        }
+        
+        .fade-out-overlay {
+            opacity: 0 !important;
+            pointer-events: none;
         }
