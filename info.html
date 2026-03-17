@@ -209,39 +209,28 @@
         /* --- Círculo y Medallas --- */
         .circle-stitched { position: relative; }
         .circle-stitched::before {
-            content: '';
-            position: absolute;
-            inset: 8px;
-            border: 2px dashed rgba(127, 156, 134, 0.5);
-            border-radius: 50%;
-            pointer-events: none;
-            transition: border-color 0.4s ease, transform 0.4s ease;
-        }
-        @media (min-width: 375px) { .circle-stitched::before { inset: 10px; border-width: 2.5px; } }
-        @media (min-width: 768px) { .circle-stitched::before { inset: 12px; } }
-        .group:hover .circle-stitched::before {
             border-color: rgba(127, 156, 134, 0.8);
             transform: scale(0.96);
         }
 
         /* --- Calendario Arco --- */
-        .arch-card { border-radius: 120px 120px 24px 24px; }
+        .arch-card { border-radius: 100px 100px 20px 20px; }
         .arch-card::before {
             content: '';
             position: absolute;
-            inset: 8px;
+            inset: 6px;
             border: 2px dashed rgba(127, 156, 134, 0.45);
-            border-radius: 110px 110px 14px 14px;
+            border-radius: 90px 90px 12px 12px;
             pointer-events: none;
             transition: border-color 0.4s ease;
         }
         @media (min-width: 375px) {
-            .arch-card { border-radius: 140px 140px 24px 24px; }
-            .arch-card::before { inset: 10px; border-width: 2.5px; border-radius: 130px 130px 14px 14px; }
+            .arch-card { border-radius: 120px 120px 20px 20px; }
+            .arch-card::before { inset: 8px; border-width: 2px; border-radius: 110px 110px 12px 12px; }
         }
         @media (min-width: 768px) {
-            .arch-card { border-radius: 180px 180px 24px 24px; }
-            .arch-card::before { inset: 12px; border-radius: 170px 170px 14px 14px; }
+            .arch-card { border-radius: 150px 150px 20px 20px; }
+            .arch-card::before { inset: 10px; border-radius: 140px 140px 12px 12px; }
         }
         .arch-card:hover::before { border-color: rgba(127, 156, 134, 0.7); }
 
@@ -288,13 +277,13 @@
 
         /* --- Calendario Interno --- */
         .calendar-day {
-            width: 22px; height: 22px;
+            width: 18px; height: 18px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.75rem; color: #57534e; margin: auto;
+            font-size: 0.65rem; color: #57534e; margin: auto;
             transition: all 0.3s ease;
         }
-        @media (min-width: 375px) { .calendar-day { width: 26px; height: 26px; font-size: 0.85rem; } }
-        @media (min-width: 768px) { .calendar-day { width: 44px; height: 44px; font-size: 1.1rem; } }
+        @media (min-width: 375px) { .calendar-day { width: 22px; height: 22px; font-size: 0.75rem; } }
+        @media (min-width: 768px) { .calendar-day { width: 34px; height: 34px; font-size: 0.95rem; } }
         
         .calendar-active {
             background: linear-gradient(135deg, #E2A9B6, #C98D9D);
@@ -527,7 +516,7 @@
             </h1>
             
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mt-8 xs:mt-10 md:mt-14 opacity-95 font-sans text-[9px] xs:text-[10px] md:text-sm tracking-[0.3em] xs:tracking-[0.4em] uppercase w-full">
-                <span class="px-4 xs:px-5 py-2 border-t border-b border-white/40 tracking-widest">10 de Marzo</span>
+                <span class="px-4 xs:px-5 py-2 border-t border-b border-white/40 tracking-widest">14 de Noviembre</span>
                 <span class="hidden sm:inline text-gold-light text-xl opacity-70">✦</span>
                 <span class="px-4 xs:px-5 py-2 border-t border-b border-white/40 tracking-widest">Chillán</span>
                 <span class="hidden sm:inline text-gold-light text-xl opacity-70">✦</span>
@@ -573,21 +562,21 @@
                 <!-- Foto Izquierda -->
                 <div class="absolute left-0 xs:left-2 md:left-[5%] top-[8%] xs:top-[10%] bg-white p-2 xs:p-3 md:p-5 shadow-elegant transform -rotate-3 w-[58%] xs:w-[55%] md:w-[35%] z-10 hover:z-40 transition-transform duration-500 hover:scale-105 hover:-rotate-1 group will-change-transform">
                     <div class="washi-tape transform rotate-[-4deg]"></div>
-                    <img loading="lazy" src="fotos/2.jpeg" class="w-full h-[140px] xs:h-[200px] sm:h-[300px] md:h-[420px] object-cover filter sepia-[0.15] contrast-125 group-hover:sepia-0 transition-all duration-700" alt="Mascota 1">
+                    <img loading="lazy" src="fotos/2.jpeg" class="w-full h-[140px] xs:h-[200px] sm:h-[300px] md:h-[420px] object-cover filter sepia-[0.15] contrast-125 group-hover:sepia-0 transition-all duration-700" alt="Mascota 1" onerror="this.src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=800&q=80'">
                     <div class="pt-2 xs:pt-4 md:pt-5 pb-1 md:pb-2 text-center font-serif italic text-base xs:text-xl md:text-2xl text-stone/80 group-hover:text-gold transition-colors duration-500">El Mimado</div>
                 </div>
 
                 <!-- Foto Derecha -->
                 <div class="absolute right-0 xs:right-2 md:right-[5%] bottom-[5%] md:top-[25%] bg-white p-2 xs:p-3 md:p-5 shadow-elegant transform rotate-3 w-[58%] xs:w-[55%] md:w-[35%] z-10 hover:z-40 transition-transform duration-500 hover:scale-105 hover:rotate-1 group will-change-transform">
                     <div class="washi-tape transform rotate-[2deg]"></div>
-                    <img loading="lazy" src="fotos/3.jpeg" class="w-full h-[140px] xs:h-[200px] sm:h-[300px] md:h-[420px] object-cover filter sepia-[0.15] contrast-125 group-hover:sepia-0 transition-all duration-700" alt="Mascota 2">
+                    <img loading="lazy" src="fotos/3.jpeg" class="w-full h-[140px] xs:h-[200px] sm:h-[300px] md:h-[420px] object-cover filter sepia-[0.15] contrast-125 group-hover:sepia-0 transition-all duration-700" alt="Mascota 2" onerror="this.src='https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=800&q=80'">
                     <div class="pt-2 xs:pt-4 md:pt-5 pb-1 md:pb-2 text-center font-serif italic text-base xs:text-xl md:text-2xl text-stone/80 group-hover:text-gold transition-colors duration-500">La Traviesa</div>
                 </div>
 
                 <!-- Foto Centro -->
                 <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-3 xs:p-4 md:p-6 shadow-[0_20px_50px_-10px_rgba(74,93,78,0.2)] -rotate-1 w-[65%] xs:w-[60%] md:w-[38%] z-20 hover:z-40 transition-transform duration-500 hover:scale-[1.05] hover:rotate-0 group will-change-transform">
                     <div class="washi-tape transform rotate-[-1deg] !w-[60px] xs:!w-[80px] md:!w-[120px]"></div>
-                    <img loading="lazy" src="fotos/1.jpeg" class="w-full h-[160px] xs:h-[220px] sm:h-[360px] md:h-[480px] object-cover filter sepia-[0.1] contrast-[1.15] group-hover:sepia-0 transition-all duration-700" alt="Mascotas juntas">
+                    <img loading="lazy" src="fotos/1.jpeg" class="w-full h-[160px] xs:h-[220px] sm:h-[360px] md:h-[480px] object-cover filter sepia-[0.1] contrast-[1.15] group-hover:sepia-0 transition-all duration-700" alt="Mascotas juntas" onerror="this.src='https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80'">
                     <div class="pt-3 xs:pt-5 md:pt-6 pb-1 md:pb-2 text-center font-serif italic text-lg xs:text-2xl md:text-3xl text-gold-rich font-semibold">Nosotros</div>
                 </div>
             </div>
@@ -595,6 +584,210 @@
     </section>
 
     <!-- SEPARADOR NOTORIO 1 -->
+    <div class="relative w-full flex justify-center items-center z-30 -my-6 xs:-my-8 md:-my-14">
+        <div class="w-full max-w-5xl flex items-center justify-center px-4 xs:px-6" data-aos="zoom-in" data-aos-offset="50">
+            <div class="flex-1 stitched-line-h pointer-events-none"></div>
+            <div class="mx-3 xs:mx-4 md:mx-8 w-14 h-14 xs:w-20 xs:h-20 md:w-28 md:h-28 rounded-full bg-white shadow-elegant border border-gold/30 circle-stitched flex items-center justify-center group cursor-default">
+                <span class="font-serif text-lg xs:text-2xl md:text-4xl text-stone tracking-widest opacity-90 transition-transform duration-500 group-hover:scale-110">A&P</span>
+            </div>
+            <div class="flex-1 stitched-line-h pointer-events-none"></div>
+        </div>
+    </div>
+
+    <!-- DETALLES, CUENTA REGRESIVA, CALENDARIO Y TARJETAS -->
+    <section class="py-12 xs:py-20 md:py-36 relative">
+        <div class="watermark font-serif uppercase tracking-[0.2em]">DETALLES</div>
+        <div class="watercolor-blob w-[250px] h-[250px] xs:w-[300px] xs:h-[300px] md:w-[700px] md:h-[700px] top-20 right-[-30px] md:right-[-100px] opacity-40"></div>
+        <div class="watercolor-blob w-[200px] h-[200px] md:w-[500px] md:h-[500px] bottom-10 left-[-50px] opacity-20" style="background: radial-gradient(circle at center, rgba(226, 169, 182, 0.15) 0%, transparent 70%); animation-duration: 15s;"></div>
+        
+        <div class="container mx-auto px-4 xs:px-6 relative z-10">
+            <!-- Título de la Sección -->
+            <div class="text-center mb-12 xs:mb-20 md:mb-28" data-aos="fade-up">
+                <span class="text-gold font-sans text-[8px] xs:text-[10px] md:text-xs tracking-[0.4em] uppercase block mb-3 xs:mb-4 font-semibold">Información</span>
+                <h2 class="font-serif text-3xl xs:text-4xl md:text-6xl text-stone italic mb-4 xs:mb-6">Detalles del Evento</h2>
+                <div class="flex justify-center items-center gap-3 xs:gap-4">
+                    <div class="w-8 xs:w-12 h-[1px] bg-gold/50"></div>
+                    <span class="text-gold-light text-xs xs:text-sm">✦</span>
+                    <div class="w-8 xs:w-12 h-[1px] bg-gold/50"></div>
+                </div>
+            </div>
+
+            <!-- NUEVO MODELO EDITORIAL: Asimétrico (Izquierda visuales, Derecha tarjetas horizontales) -->
+            <div class="grid lg:grid-cols-12 gap-8 md:gap-12 max-w-7xl mx-auto px-2 items-stretch pb-10 relative">
+                
+                <!-- Columna Izquierda: Visuales Parejos (Alineados arriba y abajo) -->
+                <div class="lg:col-span-5 flex flex-col justify-between gap-6 xs:gap-8 w-full max-w-xl mx-auto h-full">
+                    
+                    <!-- Countdown Estilo Tarjeta Premium -->
+                    <div class="stationery-card p-6 xs:p-8 md:p-10 text-center relative w-full group overflow-hidden" data-aos="fade-in" data-aos-duration="1000">
+                        <!-- Decoraciones de fondo -->
+                        <div class="absolute -top-10 -left-10 w-32 h-32 bg-gold-light/10 rounded-full blur-2xl group-hover:bg-gold-light/20 transition-colors duration-700"></div>
+                        <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-gold/10 rounded-full blur-2xl group-hover:bg-gold/20 transition-colors duration-700"></div>
+                        
+                        <div class="absolute top-4 left-4 text-gold-light opacity-60 text-sm xs:text-lg transform rotate-[-20deg]">🌸</div>
+                        <div class="absolute bottom-4 right-4 text-gold-light opacity-60 text-sm xs:text-lg transform rotate-12">🌿</div>
+
+                        <div class="flex items-center justify-center gap-4 mb-5 xs:mb-8 relative z-10">
+                            <div class="w-10 h-[1px] bg-gradient-to-r from-transparent to-gold/50"></div>
+                            <span class="font-serif italic text-2xl xs:text-3xl md:text-4xl text-stone">Faltan</span>
+                            <div class="w-10 h-[1px] bg-gradient-to-l from-transparent to-gold/50"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-4 gap-2 xs:gap-3 md:gap-4 w-full relative z-10">
+                            <!-- Día -->
+                            <div class="flex flex-col items-center justify-center bg-white rounded-xl py-3 xs:py-4 border border-stone/10 shadow-[0_8px_15px_-5px_rgba(0,0,0,0.05)] relative overflow-hidden group-hover:border-gold/30 transition-colors duration-500">
+                                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90"></div>
+                                <span id="days" class="text-xl xs:text-3xl font-serif font-light text-stone leading-none mb-1 xs:mb-2 drop-shadow-sm">0</span>
+                                <small class="text-[6px] xs:text-[8px] tracking-[0.2em] uppercase text-stone/50 font-sans font-bold">Días</small>
+                            </div>
+                            <!-- Hora -->
+                            <div class="flex flex-col items-center justify-center bg-white rounded-xl py-3 xs:py-4 border border-stone/10 shadow-[0_8px_15px_-5px_rgba(0,0,0,0.05)] relative overflow-hidden group-hover:border-gold/30 transition-colors duration-500 delay-75">
+                                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90"></div>
+                                <span id="hours" class="text-xl xs:text-3xl font-serif font-light text-stone leading-none mb-1 xs:mb-2 drop-shadow-sm">0</span>
+                                <small class="text-[6px] xs:text-[8px] tracking-[0.2em] uppercase text-stone/50 font-sans font-bold">Hrs</small>
+                            </div>
+                            <!-- Min -->
+                            <div class="flex flex-col items-center justify-center bg-white rounded-xl py-3 xs:py-4 border border-stone/10 shadow-[0_8px_15px_-5px_rgba(0,0,0,0.05)] relative overflow-hidden group-hover:border-gold/30 transition-colors duration-500 delay-150">
+                                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90"></div>
+                                <span id="mins" class="text-xl xs:text-3xl font-serif font-light text-stone leading-none mb-1 xs:mb-2 drop-shadow-sm">0</span>
+                                <small class="text-[6px] xs:text-[8px] tracking-[0.2em] uppercase text-stone/50 font-sans font-bold">Min</small>
+                            </div>
+                            <!-- Seg -->
+                            <div class="flex flex-col items-center justify-center bg-gradient-to-br from-gold/10 to-gold/5 rounded-xl py-3 xs:py-4 border border-gold/20 shadow-[0_8px_15px_-5px_rgba(127,156,134,0.15)] relative overflow-hidden group-hover:border-gold/50 transition-colors duration-500 delay-200">
+                                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-90"></div>
+                                <span id="secs" class="text-xl xs:text-3xl font-serif font-medium text-gold-dark leading-none mb-1 xs:mb-2 drop-shadow-sm">0</span>
+                                <small class="text-[6px] xs:text-[8px] tracking-[0.2em] uppercase text-gold-dark/70 font-sans font-bold">Seg</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calendario Estilo Tarjeta Premium -->
+                    <div class="stationery-card p-6 xs:p-8 md:p-10 w-full relative overflow-hidden group" data-aos="fade-up" data-aos-delay="100">
+                        <div class="absolute top-5 right-5 text-gold-light opacity-40 text-sm xs:text-xl transform rotate-45 transition-transform duration-700 group-hover:rotate-90">🌺</div>
+                        
+                        <div class="text-center relative z-10">
+                            <h3 class="font-serif text-2xl xs:text-3xl md:text-4xl text-stone mb-1 flex justify-center items-center gap-2">
+                                <span class="text-gold/40 text-lg">~</span> Noviembre <span class="text-gold/40 text-lg">~</span>
+                            </h3>
+                            <p class="text-gold-rich font-sans text-[8px] xs:text-[10px] tracking-[0.4em] font-bold uppercase mb-4 xs:mb-6">2026</p>
+                            
+                            <!-- Cabecera Días -->
+                            <div class="bg-stone/5 rounded-md py-1.5 mb-3 xs:mb-4">
+                                <div class="grid grid-cols-7 gap-y-2 font-sans text-[8px] xs:text-[10px] md:text-xs mx-0 relative">
+                                    <div class="text-gold-rich font-bold">L</div><div class="text-stone/60 font-medium">M</div><div class="text-stone/60 font-medium">M</div><div class="text-stone/60 font-medium">J</div><div class="text-stone/60 font-medium">V</div><div class="text-stone/60 font-medium">S</div><div class="text-stone/60 font-medium">D</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Grilla de Números -->
+                            <div class="grid grid-cols-7 gap-y-1 xs:gap-y-2 font-serif mx-0 relative text-sm xs:text-base md:text-lg">
+                                <div class="absolute top-0 left-[2%] text-gold-light opacity-30 text-[10px] xs:text-xs">🌸</div>
+                                
+                                <div></div><div></div><div></div><div></div><div></div><div></div>
+                                
+                                <div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">1</div>
+                                <div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">2</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">3</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">4</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">5</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">6</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">7</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">8</div>
+                                <div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">9</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">10</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">11</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">12</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">13</div>
+                                
+                                <div class="flex justify-center items-center relative">
+                                    <div class="absolute inset-0 bg-gold-rich/10 rounded-full scale-150 animate-pulse"></div>
+                                    <span class="calendar-day calendar-active shadow-lg z-10">14</span>
+                                </div>
+                                
+                                <div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">15</div>
+                                <div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">16</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">17</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">18</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">19</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">20</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">21</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">22</div>
+                                <div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">23</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">24</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">25</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">26</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">27</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">28</div><div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">29</div>
+                                <div class="calendar-day text-stone/80 hover:text-gold transition-colors cursor-default">30</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pie del calendario -->
+                        <div class="mt-5 xs:mt-8 pt-4 xs:pt-5 border-t border-gold/15 text-center relative z-10">
+                            <p class="font-serif italic text-base xs:text-lg md:text-xl text-stone flex items-center justify-center gap-2">
+                                Sábado, 18:00 h
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Columna Derecha: Tarjetas de Información (Diseño Horizontal Premium) -->
+                <div class="lg:col-span-7 flex flex-col gap-5 xs:gap-6 mt-6 lg:mt-0 w-full max-w-xl mx-auto lg:max-w-none">
+                    
+                    <!-- Card 1: Ceremonia -->
+                    <div class="stationery-card p-5 xs:p-6 md:p-8 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 xs:gap-6 md:gap-8 group/card transition-all duration-500 hover:border-gold/40 border border-transparent" data-aos="fade-left" data-aos-delay="0">
+                        <!-- Icono con Aura -->
+                        <div class="relative shrink-0 flex items-center justify-center mt-2 sm:mt-0">
+                            <div class="absolute inset-0 bg-gold/10 rounded-full transform scale-100 group-hover/card:scale-150 transition-transform duration-700 ease-out"></div>
+                            <div class="w-14 h-14 xs:w-16 xs:h-16 relative bg-white border border-gold/20 shadow-md rounded-full flex items-center justify-center transition-transform duration-500 group-hover/card:-translate-y-1">
+                                <svg class="w-6 h-6 xs:w-7 xs:h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+                        </div>
+                        <!-- Separador Vertical (Solo Desktop) -->
+                        <div class="hidden sm:block w-[1px] h-24 bg-gradient-to-b from-transparent via-gold/30 to-transparent mt-1 shrink-0"></div>
+                        <!-- Contenido -->
+                        <div class="flex-1 w-full">
+                            <h3 class="font-serif text-xl xs:text-2xl md:text-3xl text-stone mb-1 flex items-center justify-center sm:justify-start gap-2">
+                                Ceremonia & Fiesta <span class="text-gold opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 text-lg">✦</span>
+                            </h3>
+                            <p class="font-sans font-bold tracking-[0.2em] text-[8px] xs:text-[9px] text-gold uppercase mb-2 xs:mb-3">A partir de las 18:00 HRS</p>
+                            <p class="font-serif italic text-lg xs:text-xl md:text-2xl text-stone mb-1">Finca Los Olivos</p>
+                            <p class="font-sans text-[10px] md:text-[11px] text-stone/60 mb-4 leading-relaxed">
+                                Calle Falsa, 123, Chillán<br>Todo sucederá en este mismo lugar mágico.
+                            </p>
+                            <a href="#" class="btn-editorial w-full sm:w-auto text-[8px] xs:text-[9px] !py-2 !px-5">Ver Mapa</a>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Dress Code -->
+                    <div class="stationery-card p-5 xs:p-6 md:p-8 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 xs:gap-6 md:gap-8 group/card transition-all duration-500 hover:border-gold/40 border border-transparent" data-aos="fade-left" data-aos-delay="100">
+                        <div class="relative shrink-0 flex items-center justify-center mt-2 sm:mt-0">
+                            <div class="absolute inset-0 bg-gold/10 rounded-full transform scale-100 group-hover/card:scale-150 transition-transform duration-700 ease-out"></div>
+                            <div class="w-14 h-14 xs:w-16 xs:h-16 relative bg-white border border-gold/20 shadow-md rounded-full flex items-center justify-center transition-transform duration-500 group-hover/card:-translate-y-1">
+                                <svg class="w-6 h-6 xs:w-7 xs:h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                            </div>
+                        </div>
+                        <div class="hidden sm:block w-[1px] h-24 bg-gradient-to-b from-transparent via-gold/30 to-transparent mt-1 shrink-0"></div>
+                        <div class="flex-1 w-full">
+                            <h3 class="font-serif text-xl xs:text-2xl md:text-3xl text-stone mb-1 flex items-center justify-center sm:justify-start gap-2">
+                                Dress Code <span class="text-gold opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 text-lg">✦</span>
+                            </h3>
+                            <p class="font-sans font-bold tracking-[0.2em] text-[8px] xs:text-[9px] text-gold uppercase mb-2 xs:mb-3">Formal Elegante</p>
+                            <p class="font-serif italic text-lg xs:text-xl md:text-2xl text-stone mb-1">Para brillar juntos</p>
+                            <p class="font-sans text-[10px] md:text-[11px] text-stone/60 mb-0 leading-relaxed">
+                                Sugerimos traje oscuro para ellos y vestido largo o midi para ellas.<br>
+                                <span class="block mt-2 font-semibold text-gold-dark/80 italic text-[8px] md:text-[9px] bg-gold/5 inline-block px-2 py-0.5 rounded">* Por favor, reservamos el blanco para la novia *</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Regalo -->
+                    <div class="stationery-card p-5 xs:p-6 md:p-8 flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4 xs:gap-6 md:gap-8 group/card transition-all duration-500 hover:border-gold/40 border border-transparent" data-aos="fade-left" data-aos-delay="200">
+                        <div class="relative shrink-0 flex items-center justify-center mt-2 sm:mt-0">
+                            <div class="absolute inset-0 bg-gold/10 rounded-full transform scale-100 group-hover/card:scale-150 transition-transform duration-700 ease-out"></div>
+                            <div class="w-14 h-14 xs:w-16 xs:h-16 relative bg-white border border-gold/20 shadow-md rounded-full flex items-center justify-center transition-transform duration-500 group-hover/card:-translate-y-1">
+                                <svg class="w-6 h-6 xs:w-7 xs:h-7 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
+                            </div>
+                        </div>
+                        <div class="hidden sm:block w-[1px] h-24 bg-gradient-to-b from-transparent via-gold/30 to-transparent mt-1 shrink-0"></div>
+                        <div class="flex-1 w-full">
+                            <h3 class="font-serif text-xl xs:text-2xl md:text-3xl text-stone mb-1 flex items-center justify-center sm:justify-start gap-2">
+                                Regalo <span class="text-gold opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 text-lg">✦</span>
+                            </h3>
+                            <p class="font-sans font-bold tracking-[0.2em] text-[8px] xs:text-[9px] text-gold uppercase mb-2 xs:mb-3">Lluvia de Sobres</p>
+                            <p class="font-serif italic text-lg xs:text-xl md:text-2xl text-stone mb-1">Nuestro mejor regalo</p>
+                            <p class="font-sans text-[10px] md:text-[11px] text-stone/60 mb-4 leading-relaxed">
+                                Su presencia es nuestro mejor regalo. Si desean tener un detalle, pueden hacerlo aquí.
+                            </p>
+                            <button onclick="openModal()" class="btn-editorial w-full sm:w-auto text-[8px] xs:text-[9px] !py-2 !px-5">Ver Datos</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEPARADOR NOTORIO 2 -->
     <div class="relative w-full flex justify-center items-center z-30 -my-6 xs:-my-8 md:-my-14">
         <div class="w-full max-w-5xl flex items-center justify-center px-4 xs:px-6" data-aos="zoom-in" data-aos-offset="50">
             <div class="flex-1 stitched-line-h pointer-events-none"></div>
@@ -716,214 +909,6 @@
             </div>
         </div>
     </section>
-
-    <!-- SEPARADOR NOTORIO 2 -->
-    <div class="relative w-full flex justify-center items-center z-30 -my-6 xs:-my-8 md:-my-14">
-        <div class="w-full max-w-5xl flex items-center justify-center px-4 xs:px-6" data-aos="zoom-in" data-aos-offset="50">
-            <div class="flex-1 stitched-line-h pointer-events-none"></div>
-            <div class="mx-3 xs:mx-4 md:mx-8 w-14 h-14 xs:w-20 xs:h-20 md:w-28 md:h-28 rounded-full bg-white shadow-elegant border border-gold/30 circle-stitched flex items-center justify-center group cursor-default">
-                <span class="font-serif text-lg xs:text-2xl md:text-4xl text-stone tracking-widest opacity-90 transition-transform duration-500 group-hover:scale-110">A&P</span>
-            </div>
-            <div class="flex-1 stitched-line-h pointer-events-none"></div>
-        </div>
-    </div>
-
-    <!-- DETALLES, DRESS CODE Y REGALO -->
-    <section class="py-12 xs:py-20 md:py-36 relative">
-        <div class="watermark font-serif uppercase tracking-[0.2em]">DETALLES</div>
-        <div class="watercolor-blob w-[250px] h-[250px] xs:w-[300px] xs:h-[300px] md:w-[700px] md:h-[700px] top-20 right-[-30px] md:right-[-100px] opacity-40"></div>
-        
-        <div class="container mx-auto px-4 xs:px-6 relative z-10">
-            <div class="text-center mb-12 xs:mb-20 md:mb-28" data-aos="fade-up">
-                <span class="text-gold font-sans text-[8px] xs:text-[10px] md:text-xs tracking-[0.4em] uppercase block mb-3 xs:mb-4 font-semibold">Información</span>
-                <h2 class="font-serif text-3xl xs:text-4xl md:text-6xl text-stone italic mb-4 xs:mb-6">Detalles del Evento</h2>
-                <div class="flex justify-center items-center gap-3 xs:gap-4">
-                    <div class="w-8 xs:w-12 h-[1px] bg-gold/50"></div>
-                    <span class="text-gold-light text-xs xs:text-sm">✦</span>
-                    <div class="w-8 xs:w-12 h-[1px] bg-gold/50"></div>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 xs:gap-10 max-w-6xl mx-auto px-2">
-                
-                <!-- Card 1 -->
-                <div class="stationery-card p-6 xs:p-10 lg:p-12 text-center flex flex-col justify-between h-full" data-aos="fade-up" data-aos-delay="0">
-                    <div>
-                        <div class="w-14 h-14 xs:w-20 xs:h-20 bg-white border border-gold/15 shadow-sm rounded-full flex items-center justify-center mx-auto mb-5 xs:mb-8 transition-transform duration-500 hover:scale-110">
-                            <svg class="w-6 h-6 xs:w-8 xs:h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        </div>
-                        <h3 class="font-serif text-xl xs:text-3xl text-stone mb-2 xs:mb-3">Ceremonia & Fiesta</h3>
-                        <p class="font-sans font-bold tracking-[0.2em] text-[8px] xs:text-[10px] text-gold uppercase mb-3 xs:mb-5">A partir de las 18:00 HRS</p>
-                        <p class="font-serif italic text-lg xs:text-2xl md:text-3xl text-stone mb-2 xs:mb-4">Finca Los Olivos</p>
-                        <p class="font-sans text-[10px] xs:text-xs md:text-sm text-stone/60 mb-6 xs:mb-10 leading-relaxed">
-                            Calle Falsa, 123, Chillán<br>Todo sucederá en este mismo lugar mágico.
-                        </p>
-                    </div>
-                    <a href="#" class="btn-editorial w-full text-[9px] xs:text-[10px] xs:text-xs">Ver Mapa</a>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="stationery-card p-6 xs:p-10 lg:p-12 text-center flex flex-col justify-between h-full" data-aos="fade-up" data-aos-delay="100">
-                    <div>
-                        <div class="w-14 h-14 xs:w-20 xs:h-20 bg-white border border-gold/15 shadow-sm rounded-full flex items-center justify-center mx-auto mb-5 xs:mb-8 transition-transform duration-500 hover:scale-110">
-                            <svg class="w-6 h-6 xs:w-8 xs:h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
-                        </div>
-                        <h3 class="font-serif text-xl xs:text-3xl text-stone mb-2 xs:mb-3">Dress Code</h3>
-                        <p class="font-sans font-bold tracking-[0.2em] text-[8px] xs:text-[10px] text-gold uppercase mb-3 xs:mb-5">Formal Elegante</p>
-                        <p class="font-serif italic text-lg xs:text-2xl md:text-3xl text-stone mb-2 xs:mb-4">Para brillar juntos</p>
-                        <p class="font-sans text-[10px] xs:text-xs md:text-sm text-stone/60 mb-5 xs:mb-8 leading-relaxed">
-                            Sugerimos traje oscuro para ellos y vestido largo o midi para ellas.<br>
-                            <span class="block mt-2 xs:mt-4 font-semibold text-gold/90 italic text-[8px] xs:text-[10px] md:text-xs">* Por favor, reservamos el blanco para la novia *</span>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="stationery-card p-6 xs:p-10 lg:p-12 text-center flex flex-col justify-between h-full" data-aos="fade-up" data-aos-delay="200">
-                    <div>
-                        <div class="w-14 h-14 xs:w-20 xs:h-20 bg-white border border-gold/15 shadow-sm rounded-full flex items-center justify-center mx-auto mb-5 xs:mb-8 transition-transform duration-500 hover:scale-110">
-                            <svg class="w-6 h-6 xs:w-8 xs:h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
-                        </div>
-                        <h3 class="font-serif text-xl xs:text-3xl text-stone mb-2 xs:mb-3">Regalo</h3>
-                        <p class="font-sans font-bold tracking-[0.2em] text-[8px] xs:text-[10px] text-gold uppercase mb-3 xs:mb-5">Lluvia de Sobres</p>
-                        <p class="font-serif italic text-lg xs:text-2xl md:text-3xl text-stone mb-2 xs:mb-4">Nuestro mejor regalo</p>
-                        <p class="font-sans text-[10px] xs:text-xs md:text-sm text-stone/60 mb-6 xs:mb-10 leading-relaxed">
-                            Su presencia es nuestro mejor regalo. Si desean tener un detalle, pueden hacerlo aquí.
-                        </p>
-                    </div>
-                    <button onclick="openModal()" class="btn-editorial w-full text-[9px] xs:text-[10px] xs:text-xs">Ver Datos</button>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <!-- SEPARADOR NOTORIO 3 -->
-    <div class="relative w-full flex justify-center items-center z-30 -my-6 xs:-my-8 md:-my-14">
-        <div class="w-full max-w-5xl flex items-center justify-center px-4 xs:px-6" data-aos="zoom-in" data-aos-offset="50">
-            <div class="flex-1 stitched-line-h pointer-events-none"></div>
-            <div class="mx-3 xs:mx-4 md:mx-8 w-14 h-14 xs:w-20 xs:h-20 md:w-28 md:h-28 rounded-full bg-white shadow-elegant border border-gold/30 circle-stitched flex items-center justify-center group cursor-default">
-                <span class="font-serif text-lg xs:text-2xl md:text-4xl text-stone tracking-widest opacity-90 transition-transform duration-500 group-hover:scale-110">A&P</span>
-            </div>
-            <div class="flex-1 stitched-line-h pointer-events-none"></div>
-        </div>
-    </div>
-
-
-
-        <section class="py-12 xs:py-20 md:py-36 relative">
-        <div class="watermark font-serif uppercase tracking-[0.2em]">DETALLES</div>
-        <div class="watercolor-blob w-[250px] h-[250px] xs:w-[300px] xs:h-[300px] md:w-[700px] md:h-[700px] top-20 right-[-30px] md:right-[-100px] opacity-40"></div>
-        
-        <div class="container mx-auto px-4 xs:px-6 relative z-10">
-            <div class="text-center mb-12 xs:mb-20 md:mb-28" data-aos="fade-up">
-                <span class="text-gold font-sans text-[8px] xs:text-[10px] md:text-xs tracking-[0.4em] uppercase block mb-3 xs:mb-4 font-semibold">Información</span>
-                <h2 class="font-serif text-3xl xs:text-4xl md:text-6xl text-stone italic mb-4 xs:mb-6">Detalles del Evento</h2>
-                <div class="flex justify-center items-center gap-3 xs:gap-4">
-                    <div class="w-8 xs:w-12 h-[1px] bg-gold/50"></div>
-                    <span class="text-gold-light text-xs xs:text-sm">✦</span>
-                    <div class="w-8 xs:w-12 h-[1px] bg-gold/50"></div>
-                </div>
-            </div>
-
-        
-
-
-        <div class="container mx-auto px-4 xs:px-6 max-w-7xl relative z-10">
-            <div class="grid lg:grid-cols-2 gap-10 xs:gap-16 md:gap-24 items-center">
-                
-                
-                <!-- Countdown -->
-                <div class="order-2 lg:order-1 flex justify-center group" data-aos="fade-right" data-aos-duration="1000">
-                    <div class="relative w-[240px] h-[240px] xs:w-[300px] xs:h-[300px] sm:w-[380px] sm:h-[380px] md:w-[480px] md:h-[480px] flex items-center justify-center">
-                        <div class="absolute inset-0 border-[1.5px] border-gold/15 rounded-full animate-spin-slow" style="animation-duration: 45s;"></div>
-                        <div class="absolute inset-4 xs:inset-5 border-[2px] xs:border-[2.5px] border-solid border-gold/25 rounded-full animate-spin-slow" style="animation-direction: reverse; animation-duration: 60s;"></div>
-
-                        <div class="rounded-full w-[88%] h-[88%] flex flex-col items-center justify-center p-3 xs:p-6 md:p-10 relative z-10 bg-white/85 backdrop-blur-md shadow-elegant border border-white circle-stitched transition-all duration-700 group-hover:shadow-[0_20px_60px_-10px_rgba(74,93,78,0.2)]">
-                            <div class="text-base xs:text-xl md:text-3xl mb-1 xs:mb-2 opacity-80 text-gold-light">🌸</div>
-                            <span class="font-serif italic text-2xl xs:text-4xl md:text-5xl text-gold-dark mb-3 xs:mb-6 md:mb-10 text-shadow-sm">Faltan</span>
-                            
-                            <div class="flex justify-center items-start gap-2 xs:gap-4 sm:gap-8 md:gap-12 w-full px-2">
-                                <div class="flex flex-col items-center">
-                                    <span id="days" class="text-2xl xs:text-4xl md:text-6xl font-serif font-light text-stone leading-none mb-1 xs:mb-3">0</span>
-                                    <div class="stitched-line-h w-5 xs:w-8 md:w-12 mb-1 xs:mb-3 opacity-50"></div>
-                                    <small class="text-[7px] xs:text-[9px] md:text-[11px] tracking-[0.2em] xs:tracking-[0.3em] uppercase text-stone/60 font-sans font-bold">Días</small>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <span id="hours" class="text-2xl xs:text-4xl md:text-6xl font-serif font-light text-stone leading-none mb-1 xs:mb-3">0</span>
-                                    <div class="stitched-line-h w-5 xs:w-8 md:w-12 mb-1 xs:mb-3 opacity-50"></div>
-                                    <small class="text-[7px] xs:text-[9px] md:text-[11px] tracking-[0.2em] xs:tracking-[0.3em] uppercase text-stone/60 font-sans font-bold">Hrs</small>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <span id="mins" class="text-2xl xs:text-4xl md:text-6xl font-serif font-light text-stone leading-none mb-1 xs:mb-3">0</span>
-                                    <div class="stitched-line-h w-5 xs:w-8 md:w-12 mb-1 xs:mb-3 opacity-50"></div>
-                                    <small class="text-[7px] xs:text-[9px] md:text-[11px] tracking-[0.2em] xs:tracking-[0.3em] uppercase text-stone/60 font-sans font-bold">Min</small>
-                                </div>
-                                <div class="flex flex-col items-center">
-                                    <span id="secs" class="text-2xl xs:text-4xl md:text-6xl font-serif font-light text-gold-rich leading-none mb-1 xs:mb-3">0</span>
-                                    <div class="stitched-line-h w-5 xs:w-8 md:w-12 mb-1 xs:mb-3 opacity-50"></div>
-                                    <small class="text-[7px] xs:text-[9px] md:text-[11px] tracking-[0.2em] xs:tracking-[0.3em] uppercase text-stone/60 font-sans font-bold">Seg</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Calendario -->
-                <div class="order-1 lg:order-2 flex justify-center" data-aos="fade-left" data-aos-duration="1000">
-    <div class="arch-card bg-white w-full max-w-[260px] xs:max-w-[340px] md:max-w-[420px] shadow-elegant p-5 xs:p-10 md:p-14 relative overflow-hidden group hover:-translate-y-3 transition-transform duration-500 will-change-transform">
-        <div class="absolute top-6 left-5 xs:top-12 xs:left-8 md:top-14 md:left-12 text-gold-light opacity-60 text-base xs:text-xl md:text-2xl transform rotate-45">🌿</div>
-        <div class="text-center relative z-10 pt-2 xs:pt-4">
-            <h3 class="font-serif text-3xl xs:text-5xl md:text-6xl text-stone mb-1 xs:mb-2">Noviembre</h3>
-            <p class="text-gold-rich font-sans text-[8px] xs:text-[10px] md:text-xs tracking-[0.4em] xs:tracking-[0.5em] font-bold uppercase mb-4 xs:mb-8 md:mb-10">2026</p>
-            
-            <div class="grid grid-cols-7 gap-y-2 xs:gap-y-4 font-sans text-[8px] xs:text-[10px] md:text-xs mb-3 xs:mb-6 pb-2 xs:pb-4 mx-0 xs:mx-2 relative">
-                <div class="text-gold-rich font-bold">L</div><div class="text-stone/40 font-medium">M</div><div class="text-stone/40 font-medium">M</div><div class="text-stone/40 font-medium">J</div><div class="text-stone/40 font-medium">V</div><div class="text-stone/40 font-medium">S</div><div class="text-stone/40 font-medium">D</div>
-                <div class="absolute bottom-0 left-[5%] w-[90%] stitched-line-h opacity-30"></div>
-            </div>
-            
-            <div class="grid grid-cols-7 gap-y-1 xs:gap-y-2 font-serif mx-0 xs:mx-2 relative">
-                <div class="absolute top-0 left-[2%] text-gold-light opacity-40 text-xs xs:text-sm xs:text-lg">🌸</div>
-                
-                <div></div><div></div><div></div><div></div><div></div><div></div>
-                
-                <div class="calendar-day text-stone/80">1</div>
-                <div class="calendar-day text-stone/80">2</div><div class="calendar-day text-stone/80">3</div><div class="calendar-day text-stone/80">4</div><div class="calendar-day text-stone/80">5</div><div class="calendar-day text-stone/80">6</div><div class="calendar-day text-stone/80">7</div><div class="calendar-day text-stone/80">8</div>
-                <div class="calendar-day text-stone/80">9</div><div class="calendar-day text-stone/80">10</div><div class="calendar-day text-stone/80">11</div><div class="calendar-day text-stone/80">12</div><div class="calendar-day text-stone/80">13</div>
-                
-                <div class="flex justify-center items-center"><span class="calendar-day calendar-active shadow-lg">14</span></div>
-                
-                <div class="calendar-day text-stone/80">15</div>
-                <div class="calendar-day text-stone/80">16</div><div class="calendar-day text-stone/80">17</div><div class="calendar-day text-stone/80">18</div><div class="calendar-day text-stone/80">19</div><div class="calendar-day text-stone/80">20</div><div class="calendar-day text-stone/80">21</div><div class="calendar-day text-stone/80">22</div>
-                <div class="calendar-day text-stone/80">23</div><div class="calendar-day text-stone/80">24</div><div class="calendar-day text-stone/80">25</div><div class="calendar-day text-stone/80">26</div><div class="calendar-day text-stone/80">27</div><div class="calendar-day text-stone/80">28</div><div class="calendar-day text-stone/80">29</div>
-                <div class="calendar-day text-stone/80">30</div>
-            </div>
-
-            <div class="mt-6 xs:mt-12 md:mt-14">
-                <p class="font-serif italic text-lg xs:text-2xl md:text-3xl text-stone">Sábado, 12:00 h</p>
-            </div>
-            <div class="absolute -bottom-2 xs:-bottom-4 right-2 xs:right-8 text-gold-light opacity-40 text-xl xs:text-3xl transform rotate-12">🌺</div>
-        </div>
-    </div>
-</div>
-
-            </div>
-        </div>
-    </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <!-- FOOTER -->
     <section class="relative py-16 xs:py-24 md:py-40 bg-stone text-white overflow-hidden flex flex-col items-center justify-center text-center">
