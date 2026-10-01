@@ -176,20 +176,20 @@
             border-radius: 50%; transform: scale(0.92); pointer-events: none;
         }
 
-.hero-bg {
-    background-image: linear-gradient(to bottom, rgba(232,227,211,0.0) 0%, rgba(232,227,211,0.2) 70%, rgba(232,227,211,0.7) 100%),
-    url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80');
-    background-position: top center; 
-    background-size: cover; 
-    background-attachment: fixed;
-}
+        .hero-bg {
+            background-image: linear-gradient(to bottom, rgba(232,227,211,0.0) 0%, rgba(232,227,211,0.2) 70%, rgba(232,227,211,0.7) 100%),
+            url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80');
+            background-position: top center; 
+            background-size: cover; 
+            background-attachment: fixed;
+        }
 
-/* Corrección específica para Safari en dispositivos Apple */
-@supports (-webkit-touch-callout: none) {
-    .hero-bg {
-        background-attachment: scroll;
-    }
-}
+        /* Corrección específica para Safari en dispositivos Apple */
+        @supports (-webkit-touch-callout: none) {
+            .hero-bg {
+                background-attachment: scroll;
+            }
+        }
 
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         .animate-float { animation: float 6s ease-in-out infinite; }
@@ -855,13 +855,13 @@
         <div class="container mx-auto px-4 xs:px-6 relative z-10">
             <div class="text-center mb-10 xs:mb-16 md:mb-20" data-aos="fade-up">
                 <span class="text-gold-dark font-sans text-[9px] xs:text-[11px] md:text-sm tracking-[0.4em] uppercase block mb-3 xs:mb-4 font-medium">RSVP</span>
-                <h2 class="font-serif italic text-3xl xs:text-4xl md:text-6xl text-stone mb-4 xs:mb-6 font-medium">Confirma tu Asistencia</h2>
+                <h2 class="font-serif italic text-3xl xs:text-4xl md:text-6xl text-stone mb-4 xs:mb-6 font-medium">Confirmación Finalizada</h2>
                 <div class="flex justify-center items-center gap-3 xs:gap-4">
                     <div class="w-8 xs:w-12 h-[1px] bg-gold/70"></div>
                     <span class="text-gold-light text-xs xs:text-sm opacity-90">✦</span>
                     <div class="w-8 xs:w-12 h-[1px] bg-gold/70"></div>
                 </div>
-                <p class="font-sans text-[10px] md:text-xs text-stone/90 font-medium tracking-widest uppercase mt-6">Por favor, confírmanos antes del 30 de Septiembre de 2026</p>
+                <p class="font-sans text-[10px] md:text-xs text-stone/90 font-medium tracking-widest uppercase mt-6">El plazo para confirmar asistencia ha concluido</p>
             </div>
 
             <div class="max-w-2xl mx-auto" data-aos="zoom-in" data-aos-duration="1000">
@@ -872,22 +872,23 @@
                     </div>
 
                     <div class="relative z-10 flex flex-col items-center justify-center text-center py-4 xs:py-8">
-                        <p class="font-sans text-[11px] md:text-[13px] text-stone/80 mb-2 md:mb-4 max-w-md leading-relaxed font-medium tracking-wide">
-                            Haz clic en el siguiente botón para llenar el formulario y confirmar tu asistencia.
+                        <!-- Icono decorativo de lista cerrada/éxito -->
+                        <div class="w-14 h-14 xs:w-16 xs:h-16 relative bg-[#EFEBE0] border border-gold/30 shadow-md rounded-full flex items-center justify-center text-gold mb-6 xs:mb-8">
+                            <svg class="w-6 h-6 xs:w-8 xs:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        
+                        <p class="font-serif italic text-2xl xs:text-3xl md:text-[2.25rem] text-gold-dark mb-4 xs:mb-6 max-w-md leading-tight">
+                            ¡Gracias a todos los confirmados!
                         </p>
-                        <p class="font-serif italic text-2xl xs:text-3xl md:text-[2.25rem] text-gold-dark mb-6 md:mb-10 max-w-md leading-tight">
-                            ¡Nos hace muy felices que nos acompañes!
+                        <p class="font-sans text-[11px] md:text-[13px] text-stone/80 mb-6 xs:mb-8 max-w-md leading-relaxed font-medium tracking-wide">
+                            Estamos muy emocionados y contando los días para celebrar este gran paso junto a ustedes. La lista oficial ha sido cerrada para afinar los últimos detalles.
                         </p>
                         
-                        <div class="relative inline-block w-full sm:w-auto px-2 sm:px-0">
-                            <!-- REEMPLAZA "#" CON EL LINK DE TU GOOGLE FORM ABAJO -->
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc6zjaIcovzlRm-Rr8rENzwpjKjJmj-dNjdtgqiezL00h4S6w/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="btn-editorial w-full sm:w-auto text-[10px] xs:text-[11px] md:text-xs !py-3 !px-8 text-center flex items-center justify-center gap-2 group">
-                                <span class="relative z-10">Confirme aquí </span>
-                                <svg class="relative z-10 w-3 h-3 xs:w-4 xs:h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </a>
-                            <!-- Flecha animada apuntando al botón -->
-                            <svg class="absolute -bottom-4 -right-1 xs:-right-5 w-5 h-5 xs:w-7 xs:h-7 text-gold-light animate-bounce pointer-events-none drop-shadow-md z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
-                        </div>
+                        <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent mb-6"></div>
+
+                        <p class="font-sans text-[9px] md:text-[10px] text-stone/60 uppercase tracking-[0.15em] font-medium px-4">
+                            En caso de fuerza mayor o dudas de último minuto, <br class="hidden xs:block">por favor comuníquense directamente con los novios.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -1063,7 +1064,8 @@
         const progressThumb = document.getElementById('progress-thumb');
         
         const playlist = [
-            { title: "Unit I Found You", src: "Musica/Stephen Sanchez - Until I Found You (Official Video).mp3" }
+            // HE CAMBIADO LA RUTA LOCAL POR UNA PÚBLICA PARA QUE PUEDAS PREVISUALIZAR EL AUDIO
+            { title: "Until I Found You", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" }
         ];
         
         let currentSongIndex = 0;
